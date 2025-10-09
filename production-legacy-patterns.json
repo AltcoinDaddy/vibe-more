@@ -1,0 +1,58 @@
+{
+  "totalFilesScanned": 114,
+  "filesWithLegacyPatterns": 1,
+  "totalPatternsFound": 3,
+  "patternsByType": {
+    "pub-keyword": 3
+  },
+  "patternsBySeverity": {
+    "critical": 3
+  },
+  "patterns": [
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "components/code-modernizer.tsx",
+        "line": 190,
+        "column": 1,
+        "context": "            placeholder=\"// Paste your legacy Cadence code here...\npub contract MyContract {\n    pub var value: String"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "components/code-modernizer.tsx",
+        "line": 191,
+        "column": 5,
+        "context": "pub contract MyContract {\n    pub var value: String\n    "
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "components/code-modernizer.tsx",
+        "line": 193,
+        "column": 5,
+        "context": "    \n    pub fun getValue(): String {\n        return self.value"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    }
+  ],
+  "summary": "Scanned 114 production code files and found 3 legacy patterns in 1 files.\n\n🚨 CRITICAL: 3 patterns in production code that must be fixed immediately\n\nPriority: Fix critical patterns in production code first, then warnings, then suggestions.",
+  "generatedAt": "2025-10-07T20:56:54.131Z",
+  "version": "1.0.0"
+}
