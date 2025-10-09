@@ -19,6 +19,9 @@ yarn-error.log*
 # env files
 .env*
 
+# test files with sensitive data
+test-with-env.ts
+
 # vercel
 .vercel
 
