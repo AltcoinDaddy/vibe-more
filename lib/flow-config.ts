@@ -13,7 +13,7 @@ export const FLOW_CONFIG = {
 }
 
 export const getCurrentNetwork = () => {
-  return process.env.FLOW_NETWORK || "testnet"
+  return process.env.NEXT_PUBLIC_FLOW_NETWORK || "testnet"
 }
 
 export const getFlowConfig = () => {

@@ -52,13 +52,18 @@ export class PromptEnhancer {
   private static readonly BASE_QUALITY_INSTRUCTIONS = `
 🚨 CRITICAL QUALITY REQUIREMENTS 🚨
 
+🔥 CADENCE 1.0 SYNTAX ENFORCEMENT (ABSOLUTELY MANDATORY):
+- NEVER EVER use "pub" keyword - this is FORBIDDEN in Cadence 1.0
+- ALWAYS use "access(all)" instead of "pub" - NO EXCEPTIONS
+- NEVER use "AuthAccount" - this is deprecated and forbidden
+- NEVER use legacy storage API like "account.save" or "account.link"
+- ALWAYS use modern storage API: account.storage.save(), account.capabilities.storage.issue()
+- NEVER use old capability patterns - use modern capability-based security
+- Use ONLY these access modifiers: access(all), access(self), access(contract), access(account)
+- Use entitlements for fine-grained access control where appropriate
+
 MANDATORY SYNTAX COMPLIANCE:
 - NEVER use "undefined" values - always provide proper defaults (String: "", UInt64: 0, Bool: false, Arrays: [], Dictionaries: {})
-- NEVER use "pub" keyword - ALWAYS use "access(all)" instead
-- NEVER use "AuthAccount" - use modern account access patterns with proper entitlements
-- NEVER use legacy storage API - use account.storage.save(), account.capabilities.storage.issue()
-- Use proper access modifiers: access(all), access(self), access(contract), access(account)
-- Use entitlements for fine-grained access control where appropriate
 - Ensure ALL brackets, parentheses, and braces are properly matched
 - NEVER leave function bodies empty - always provide complete implementations
 - NEVER use placeholder comments like "TODO" or "FIXME" - implement everything
@@ -445,6 +450,20 @@ Apply these learnings to ensure higher quality output.`
     let systemPrompt = `You are an expert Flow blockchain developer specializing in Cadence 1.0 smart contracts.
 Generate PERFECT, production-ready code with ZERO quality issues.
 
+🚨🚨🚨 CRITICAL CADENCE 1.0 SYNTAX ENFORCEMENT 🚨🚨🚨
+ABSOLUTELY FORBIDDEN PATTERNS (WILL CAUSE IMMEDIATE REJECTION):
+- "pub" keyword - NEVER use this, ALWAYS use "access(all)" instead
+- "AuthAccount" - NEVER use this deprecated type
+- "account.save" or "account.link" - NEVER use legacy storage API
+- Any Cadence 0.x syntax patterns
+
+REQUIRED CADENCE 1.0 PATTERNS:
+- access(all) instead of pub
+- access(self) for private access
+- account.storage.save() for storage operations
+- account.capabilities.storage.issue() for capabilities
+- Modern capability-based security patterns
+
 ${this.BASE_QUALITY_INSTRUCTIONS}
 
 ${this.UNDEFINED_PREVENTION_RULES}
@@ -488,6 +507,12 @@ These issues MUST be completely avoided in this generation.`
   ): string {
     let enhanced = `Create a PERFECT Cadence 1.0 smart contract for: ${basePrompt}
 
+🔥 CADENCE 1.0 SYNTAX REQUIREMENTS (CRITICAL - NO EXCEPTIONS):
+- NEVER use "pub" - ALWAYS use "access(all)" instead
+- NEVER use "AuthAccount" - use modern account patterns
+- NEVER use legacy storage API - use account.storage.save(), account.capabilities.storage.issue()
+- Use ONLY modern Cadence 1.0 syntax throughout the entire contract
+
 🎯 CRITICAL QUALITY REQUIREMENTS:
 - ZERO undefined values anywhere in the code (use concrete defaults: "", 0, false, [], {})
 - Complete, production-ready implementation with all functions fully working
@@ -495,7 +520,6 @@ These issues MUST be completely avoided in this generation.`
 - All variables properly initialized with meaningful, concrete values
 - Perfect syntax with no errors - every bracket must match
 - Comprehensive error handling with pre/post conditions
-- Modern Cadence 1.0 syntax only (access(all), not pub)
 - Proper resource lifecycle management
 - Complete event definitions and emissions`
 

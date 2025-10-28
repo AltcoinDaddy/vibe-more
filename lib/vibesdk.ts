@@ -4,29 +4,10 @@ import { ValidationResult } from "./migration/types"
 import { PromptEnhancer, PromptEnhancementOptions } from "./quality-assurance/prompt-enhancer"
 import { GenerationContext, FailurePattern, QualityRequirements } from "./quality-assurance/types"
 
-// Try-catch imports to handle potential module resolution issues
-let openai: any, anthropic: any, google: any
-
-try {
-  const openaiModule = require("@ai-sdk/openai")
-  openai = openaiModule.openai
-} catch (e) {
-  console.warn("[VibeSDK] OpenAI provider not available")
-}
-
-try {
-  const anthropicModule = require("@ai-sdk/anthropic")
-  anthropic = anthropicModule.anthropic
-} catch (e) {
-  console.warn("[VibeSDK] Anthropic provider not available")
-}
-
-try {
-  const googleModule = require("@ai-sdk/google")
-  google = googleModule.google
-} catch (e) {
-  console.warn("[VibeSDK] Google provider not available")
-}
+// Import AI providers
+import { openai } from "@ai-sdk/openai"
+import { anthropic } from "@ai-sdk/anthropic"
+import { google } from "@ai-sdk/google"
 
 export interface GenerateCodeOptions {
   prompt: string
@@ -51,8 +32,404 @@ export interface GenerateCodeResult {
   rejectionReason?: string
 }
 
+// Import documentation types
+export type { GeneratedDocumentation } from './documentation-generator'
+
+// Additional interfaces for full-stack generation
+
+export interface FullStackValidationResult {
+  isValid: boolean
+  errors: string[]
+  warnings: string[]
+  score: number
+}
+
+export interface ContractFunction {
+  name: string
+  purpose: string
+  parameters: string[]
+  returnType: string
+  access: string
+}
+
+export interface ContractEvent {
+  name: string
+  purpose: string
+  fields: string[]
+}
+
+export interface StylingInfo {
+  framework: 'tailwind' | 'css'
+  theme: 'light' | 'dark' | 'auto'
+  responsive: boolean
+  accessibility: boolean
+}
+
+export interface APIValidationSchema {
+  body?: Record<string, any>
+  query?: Record<string, any>
+  params?: Record<string, any>
+}
+
+export interface ContractBinding {
+  contractName: string
+  functionName: string
+  parameters: Parameter[]
+}
+
+export interface APIIntegration {
+  endpoint: string
+  method: string
+  contractFunction: string
+}
+
+export interface TypeDefinition {
+  name: string
+  type: string
+  description: string
+}
+
+export interface UtilityFunction {
+  name: string
+  purpose: string
+  code: string
+}
+
+// Full-stack generation interfaces
+export interface FullStackGenerationOptions extends GenerateCodeOptions {
+  includeFrontend: boolean
+  includeAPI: boolean
+  uiFramework: 'react' | 'next'
+  stylingFramework: 'tailwind' | 'css'
+  deploymentTarget: 'vercel' | 'netlify' | 'self-hosted'
+  projectName: string
+}
+
+export interface FullStackGenerationResult {
+  smartContracts: GeneratedContract[]
+  frontendComponents: GeneratedComponent[]
+  apiRoutes: GeneratedAPIRoute[]
+  configurations: GeneratedConfig[]
+  projectStructure: ProjectStructure
+  integrationCode: IntegrationCode
+  documentation?: GeneratedDocumentation
+}
+
+export interface GeneratedContract {
+  filename: string
+  code: string
+  validation: ValidationResult
+  dependencies: string[]
+}
+
+export interface GeneratedComponent {
+  filename: string
+  code: string
+  componentType: 'page' | 'component' | 'layout'
+  dependencies: string[]
+  contractIntegrations: ContractIntegration[]
+}
+
+export interface GeneratedAPIRoute {
+  filename: string
+  code: string
+  endpoint: string
+  methods: string[]
+  contractCalls: string[]
+}
+
+export interface GeneratedConfig {
+  filename: string
+  code: string
+  configType: 'package' | 'next' | 'tailwind' | 'typescript' | 'env' | 'postcss' | 'git' | 'documentation'
+}
+
+export interface ContractIntegration {
+  contractName: string
+  functions: string[]
+  events: string[]
+  integrationCode: string
+}
+
+export interface ProjectStructure {
+  directories: Directory[]
+  files: GeneratedFile[]
+  configurations: ConfigurationFile[]
+}
+
+export interface Directory {
+  name: string
+  path: string
+  children: (Directory | GeneratedFile)[]
+}
+
+export interface GeneratedFile {
+  name: string
+  path: string
+  content: string
+  type: 'contract' | 'component' | 'api' | 'config' | 'documentation'
+}
+
+export interface ConfigurationFile {
+  name: string
+  path: string
+  content: string
+  configType: string
+}
+
+export interface IntegrationCode {
+  hooks: string[]
+  utilities: string[]
+  types: string[]
+}
+
+// Component specification interfaces
+export interface ComponentSpecification {
+  name: string
+  type: 'form' | 'display' | 'interaction' | 'navigation'
+  props: ComponentProp[]
+  styling: StylingRequirements
+  contractFunctions: string[]
+}
+
+export interface ComponentProp {
+  name: string
+  type: string
+  required: boolean
+  description?: string
+}
+
+export interface StylingRequirements {
+  framework: 'tailwind' | 'css'
+  theme: 'light' | 'dark' | 'auto'
+  responsive: boolean
+  accessibility: boolean
+}
+
+// API route specification interfaces
+export interface APIRouteSpecification {
+  path: string
+  methods: HTTPMethod[]
+  contractCalls: ContractCall[]
+  validation: ValidationSchema
+  authentication: boolean
+}
+
+export interface ContractCall {
+  contractName: string
+  functionName: string
+  parameters: Parameter[]
+  returnType: string
+}
+
+export interface Parameter {
+  name: string
+  type: string
+  required: boolean
+}
+
+export interface ValidationSchema {
+  body?: Record<string, any>
+  query?: Record<string, any>
+  params?: Record<string, any>
+}
+
+export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'
+
+// Project generation request interfaces
+export interface FullStackProjectRequest {
+  description: string
+  projectName: string
+  features: FeatureRequirement[]
+  uiRequirements: UIRequirements
+  deploymentRequirements: DeploymentRequirements
+  advancedOptions: AdvancedOptions
+}
+
+export interface FeatureRequirement {
+  type: 'nft' | 'token' | 'marketplace' | 'dao' | 'defi' | 'custom'
+  specifications: Record<string, any>
+  priority: 'high' | 'medium' | 'low'
+}
+
+export interface UIRequirements {
+  pages: PageRequirement[]
+  components: ComponentRequirement[]
+  styling: StylingPreferences
+  responsive: boolean
+  accessibility: boolean
+}
+
+export interface PageRequirement {
+  name: string
+  route: string
+  purpose: string
+  contractInteractions: string[]
+  layout: string
+}
+
+export interface ComponentRequirement {
+  name: string
+  type: string
+  functionality: string[]
+  contractBindings: string[]
+}
+
+export interface StylingPreferences {
+  primaryColor?: string
+  theme: 'light' | 'dark' | 'auto'
+  framework: 'tailwind' | 'css'
+  customStyles?: Record<string, string>
+}
+
+export interface DeploymentRequirements {
+  target: 'vercel' | 'netlify' | 'self-hosted'
+  environment: 'development' | 'staging' | 'production'
+  customDomain?: string
+  environmentVariables?: Record<string, string>
+}
+
+export interface AdvancedOptions {
+  typescript: boolean
+  testing: boolean
+  linting: boolean
+  formatting: boolean
+  documentation: boolean
+}
+
+// Prompt parsing result interfaces
+export interface ParsedPromptResult {
+  projectType: ProjectType
+  backendRequirements: BackendRequirements
+  frontendRequirements: FrontendRequirements
+  integrationRequirements: IntegrationRequirements
+  confidence: number
+}
+
+export interface BackendRequirements {
+  contractTypes: string[]
+  functions: FunctionRequirement[]
+  events: EventRequirement[]
+  resources: ResourceRequirement[]
+}
+
+export interface FrontendRequirements {
+  pages: string[]
+  components: string[]
+  interactions: InteractionRequirement[]
+  styling: StylingRequirements
+}
+
+export interface IntegrationRequirements {
+  apiEndpoints: string[]
+  contractBindings: string[]
+  dataFlow: DataFlowRequirement[]
+}
+
+export interface FunctionRequirement {
+  name: string
+  purpose: string
+  parameters: string[]
+  returnType: string
+  access: string
+}
+
+export interface EventRequirement {
+  name: string
+  purpose: string
+  fields: string[]
+}
+
+export interface ResourceRequirement {
+  name: string
+  purpose: string
+  interfaces: string[]
+  functions: string[]
+}
+
+export interface InteractionRequirement {
+  type: 'form' | 'button' | 'display' | 'navigation'
+  contractFunction: string
+  userInput: string[]
+  feedback: string[]
+}
+
+export interface DataFlowRequirement {
+  source: string
+  destination: string
+  transformation: string
+  validation: string[]
+}
+
+export type ProjectType = 'nft-collection' | 'marketplace' | 'defi-protocol' | 'dao' | 'token' | 'custom'
+
+// Prompt parsing result interfaces
+export interface ParsedPromptResult {
+  projectType: ProjectType
+  backendRequirements: BackendRequirements
+  frontendRequirements: FrontendRequirements
+  integrationRequirements: IntegrationRequirements
+  confidence: number
+}
+
+export interface BackendRequirements {
+  contractTypes: string[]
+  functions: FunctionRequirement[]
+  events: EventRequirement[]
+  resources: ResourceRequirement[]
+}
+
+export interface FrontendRequirements {
+  pages: string[]
+  components: string[]
+  interactions: InteractionRequirement[]
+  styling: StylingRequirements
+}
+
+export interface IntegrationRequirements {
+  apiEndpoints: string[]
+  contractBindings: string[]
+  dataFlow: DataFlowRequirement[]
+}
+
+export interface FunctionRequirement {
+  name: string
+  purpose: string
+  parameters: string[]
+  returnType: string
+  access: string
+}
+
+export interface EventRequirement {
+  name: string
+  purpose: string
+  fields: string[]
+}
+
+export interface ResourceRequirement {
+  name: string
+  purpose: string
+  interfaces: string[]
+  functions: string[]
+}
+
+export interface InteractionRequirement {
+  type: 'form' | 'button' | 'display' | 'navigation'
+  contractFunction: string
+  userInput: string[]
+  feedback: string[]
+}
+
+export interface DataFlowRequirement {
+  source: string
+  destination: string
+  transformation: string
+  validation: string[]
+}
+
 /**
  * VibeSDK - AI-powered Cadence code generation for Flow blockchain
+ * Extended with full-stack dApp generation capabilities
  */
 export class VibeSDK {
   private model: any
@@ -64,15 +441,15 @@ export class VibeSDK {
 
   private initializeModel() {
     // Priority order: OpenAI > Gemini > Anthropic > Vercel AI Gateway > Mock
-    if (process.env.OPENAI_API_KEY && openai) {
+    if (process.env.OPENAI_API_KEY) {
       this.model = openai("gpt-4o")
       this.isAIAvailable = true
       console.log("[VibeSDK] Using OpenAI GPT-4o")
-    } else if (process.env.GOOGLE_GENERATIVE_AI_API_KEY && google) {
+    } else if (process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
       this.model = google("gemini-2.0-flash-exp")
       this.isAIAvailable = true
       console.log("[VibeSDK] Using Google Gemini 2.0 Flash")
-    } else if (process.env.ANTHROPIC_API_KEY && anthropic) {
+    } else if (process.env.ANTHROPIC_API_KEY) {
       this.model = anthropic("claude-3-5-sonnet-20241022")
       this.isAIAvailable = true
       console.log("[VibeSDK] Using Anthropic Claude")
@@ -136,20 +513,22 @@ export class VibeSDK {
         temperature: enhancedPrompt.temperature,
         system: enhancedPrompt.systemPrompt,
         prompt: enhancedPrompt.userPrompt,
+        maxRetries: 3,
+        abortSignal: AbortSignal.timeout(30000), // 30 second timeout
       })
 
       // Validate generated code before returning
       const validation = this.validateGeneratedCode(text)
       const rejection = this.shouldRejectGeneratedCode(text)
-      
+
       if (!validation.isValid || rejection.shouldReject) {
         console.warn("[VibeSDK] Generated code failed validation, attempting regeneration with enhanced prompts...")
         console.warn("[VibeSDK] Validation errors:", validation.errors?.slice(0, 3))
         console.warn("[VibeSDK] Rejection reason:", rejection.reason)
-        
+
         // Analyze failures for prompt enhancement
         const failurePatterns = this.analyzeValidationFailures(validation, rejection)
-        
+
         // Try up to 3 times with progressively enhanced prompts
         for (let attempt = 2; attempt <= 4; attempt++) {
           const retryOptions: PromptEnhancementOptions = {
@@ -173,22 +552,24 @@ export class VibeSDK {
             temperature: retryEnhancedPrompt.temperature,
             system: retryEnhancedPrompt.systemPrompt,
             prompt: retryEnhancedPrompt.userPrompt,
+            maxRetries: 2,
+            abortSignal: AbortSignal.timeout(25000), // 25 second timeout for retries
           })
 
           const retryValidation = this.validateGeneratedCode(retryText)
           const retryRejection = this.shouldRejectGeneratedCode(retryText)
-          
+
           if (retryValidation.isValid && !retryRejection.shouldReject) {
             console.log(`[VibeSDK] Enhanced prompt regeneration successful on attempt ${attempt}`)
             return retryText
           }
-          
+
           console.warn(`[VibeSDK] Enhanced prompt attempt ${attempt} failed validation:`, retryValidation.errors?.slice(0, 3))
-          
+
           // Update failure patterns for next attempt
           failurePatterns.push(...this.analyzeValidationFailures(retryValidation, retryRejection))
         }
-        
+
         console.error("[VibeSDK] All enhanced prompt attempts failed, using guaranteed modern mock")
         return this.getMockResponse(prompt)
       }
@@ -206,7 +587,175 @@ export class VibeSDK {
    */
   private getMockResponse(prompt: string): string {
     const lowerPrompt = prompt.toLowerCase()
-    
+
+    // Check for more specific patterns first (marketplace, dao, etc.)
+    if (lowerPrompt.includes('marketplace')) {
+      return `// Perfect Cadence 1.0 NFT Marketplace Contract - Production Ready
+import "NonFungibleToken"
+import "FungibleToken"
+import "MetadataViews"
+
+access(all) contract NFTMarketplace {
+    access(all) event ForSale(id: UInt64, price: UFix64, owner: Address?)
+    access(all) event PriceChanged(id: UInt64, newPrice: UFix64, owner: Address?)
+    access(all) event TokenPurchased(id: UInt64, price: UFix64, seller: Address?, buyer: Address?)
+    access(all) event SaleCanceled(id: UInt64, seller: Address?)
+
+    access(all) let MarketplaceStoragePath: StoragePath
+    access(all) let MarketplacePublicPath: PublicPath
+
+    access(all) resource interface SalePublic {
+        access(all) fun purchase(tokenID: UInt64, recipient: &{NonFungibleToken.CollectionPublic}, buyTokens: @{FungibleToken.Vault})
+        access(all) view fun idPrice(tokenID: UInt64): UFix64?
+        access(all) view fun getIDs(): [UInt64]
+        access(all) view fun getSaleInfo(tokenID: UInt64): SaleInfo?
+    }
+
+    access(all) struct SaleInfo {
+        access(all) let tokenID: UInt64
+        access(all) let price: UFix64
+        access(all) let seller: Address
+
+        init(tokenID: UInt64, price: UFix64, seller: Address) {
+            self.tokenID = tokenID
+            self.price = price
+            self.seller = seller
+        }
+    }
+
+    access(all) resource SaleCollection: SalePublic {
+        access(self) var forSale: {UInt64: UFix64}
+        access(self) var nftProviderCapability: Capability<&{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>
+        access(self) var ownerVaultCapability: Capability<&{FungibleToken.Receiver}>
+
+        init(
+            nftProviderCapability: Capability<&{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>,
+            ownerVaultCapability: Capability<&{FungibleToken.Receiver}>
+        ) {
+            pre {
+                nftProviderCapability.check(): "Invalid NFT provider capability"
+                ownerVaultCapability.check(): "Invalid vault receiver capability"
+            }
+            self.forSale = {}
+            self.nftProviderCapability = nftProviderCapability
+            self.ownerVaultCapability = ownerVaultCapability
+        }
+
+        access(all) fun listForSale(tokenID: UInt64, price: UFix64) {
+            pre {
+                price > 0.0: "Price must be greater than zero"
+                self.nftProviderCapability.check(): "NFT provider capability is invalid"
+            }
+
+            let nftCollection = self.nftProviderCapability.borrow()
+                ?? panic("Could not borrow NFT collection")
+
+            // Verify the NFT exists in the collection
+            let nftRef = nftCollection.borrowNFT(tokenID)
+                ?? panic("NFT does not exist in the collection")
+
+            self.forSale[tokenID] = price
+            emit ForSale(id: tokenID, price: price, owner: self.owner?.address)
+        }
+
+        access(all) fun cancelSale(tokenID: UInt64) {
+            pre {
+                self.forSale[tokenID] != nil: "Token is not for sale"
+            }
+            self.forSale.remove(key: tokenID)
+            emit SaleCanceled(id: tokenID, seller: self.owner?.address)
+        }
+
+        access(all) fun changePrice(tokenID: UInt64, newPrice: UFix64) {
+            pre {
+                self.forSale[tokenID] != nil: "Token is not for sale"
+                newPrice > 0.0: "Price must be greater than zero"
+            }
+            self.forSale[tokenID] = newPrice
+            emit PriceChanged(id: tokenID, newPrice: newPrice, owner: self.owner?.address)
+        }
+
+        access(all) fun purchase(tokenID: UInt64, recipient: &{NonFungibleToken.CollectionPublic}, buyTokens: @{FungibleToken.Vault}) {
+            pre {
+                self.forSale[tokenID] != nil: "Token is not for sale"
+                buyTokens.balance >= self.forSale[tokenID]!: "Insufficient payment"
+                self.nftProviderCapability.check(): "NFT provider capability is invalid"
+                self.ownerVaultCapability.check(): "Owner vault capability is invalid"
+            }
+
+            let price = self.forSale[tokenID]!
+            self.forSale.remove(key: tokenID)
+
+            // Get the NFT from the seller's collection
+            let nftCollection = self.nftProviderCapability.borrow()
+                ?? panic("Could not borrow NFT collection")
+
+            let nft <- nftCollection.withdraw(withdrawID: tokenID)
+
+            // Deposit the NFT to the buyer's collection
+            recipient.deposit(token: <-nft)
+
+            // Pay the seller
+            let vaultRef = self.ownerVaultCapability.borrow()
+                ?? panic("Could not borrow seller's vault")
+
+            vaultRef.deposit(from: <-buyTokens)
+
+            emit TokenPurchased(
+                id: tokenID,
+                price: price,
+                seller: self.owner?.address,
+                buyer: recipient.owner?.address
+            )
+        }
+
+        access(all) view fun idPrice(tokenID: UInt64): UFix64? {
+            return self.forSale[tokenID]
+        }
+
+        access(all) view fun getIDs(): [UInt64] {
+            return self.forSale.keys
+        }
+
+        access(all) view fun getSaleInfo(tokenID: UInt64): SaleInfo? {
+            if let price = self.forSale[tokenID] {
+                return SaleInfo(
+                    tokenID: tokenID,
+                    price: price,
+                    seller: self.owner?.address ?? panic("Could not get seller address")
+                )
+            }
+            return nil
+        }
+
+        access(all) view fun getAllSaleInfo(): [SaleInfo] {
+            let saleInfos: [SaleInfo] = []
+            for tokenID in self.forSale.keys {
+                if let saleInfo = self.getSaleInfo(tokenID: tokenID) {
+                    saleInfos.append(saleInfo)
+                }
+            }
+            return saleInfos
+        }
+    }
+
+    access(all) fun createSaleCollection(
+        nftProviderCapability: Capability<&{NonFungibleToken.Provider, NonFungibleToken.CollectionPublic}>,
+        ownerVaultCapability: Capability<&{FungibleToken.Receiver}>
+    ): @SaleCollection {
+        return <- create SaleCollection(
+            nftProviderCapability: nftProviderCapability,
+            ownerVaultCapability: ownerVaultCapability
+        )
+    }
+
+    init() {
+        self.MarketplaceStoragePath = /storage/NFTMarketplace
+        self.MarketplacePublicPath = /public/NFTMarketplace
+    }
+}`
+    }
+
     if (lowerPrompt.includes('nft') || lowerPrompt.includes('token')) {
       return `// Perfect Cadence 1.0 NFT Contract - Production Ready
 import "NonFungibleToken"
@@ -488,7 +1037,7 @@ access(all) contract GeneratedNFT: NonFungibleToken {
     }
 }`
     }
-    
+
     // Default contract for other prompts - Perfect Cadence 1.0
     return `// Perfect Cadence 1.0 Contract - Production Ready
 access(all) contract GeneratedContract {
@@ -610,7 +1159,7 @@ access(all) contract GeneratedContract {
       // Simulate streaming for mock response
       const mockResponse = this.getMockResponse(prompt)
       const words = mockResponse.split(' ')
-      
+
       for (let i = 0; i < words.length; i += 3) {
         const chunk = words.slice(i, i + 3).join(' ') + ' '
         yield chunk
@@ -775,10 +1324,10 @@ Include analysis of patterns, quality assessment, best practices, potential impr
       return text
     } catch (error) {
       console.error("[VibeSDK] Code explanation failed:", error)
-      
+
       // Enhanced fallback explanation when AI is not available
       const userLevel = this.inferUserExperience(code)
-      const levelSpecificContent = userLevel === 'beginner' 
+      const levelSpecificContent = userLevel === 'beginner'
         ? `
 🌟 **For Beginners**:
 - Resources are like special containers that can only exist in one place
@@ -786,13 +1335,13 @@ Include analysis of patterns, quality assessment, best practices, potential impr
 - The init() function runs when the contract is first deployed
 - Events are like notifications that tell everyone when something happens`
         : userLevel === 'expert'
-        ? `
+          ? `
 🚀 **Advanced Analysis**:
 - Resource lifecycle management ensures no duplication or loss
 - Capability-based security model provides fine-grained access control
 - Storage API separation provides better security boundaries
 - Event emissions enable off-chain indexing and monitoring`
-        : `
+          : `
 💡 **Key Concepts**:
 - Resources ensure digital asset security through linear types
 - Access control patterns protect sensitive functionality
@@ -919,15 +1468,15 @@ Return only the refined Cadence code without explanations.`
       // Validate the refined code before returning
       const validation = this.validateGeneratedCode(text)
       const rejection = this.shouldRejectGeneratedCode(text)
-      
+
       if (!validation.isValid || rejection.shouldReject) {
         console.warn("[VibeSDK] Refined code failed validation, attempting re-refinement with maximum strictness...")
         console.warn("[VibeSDK] Validation errors:", validation.errors?.slice(0, 3))
         console.warn("[VibeSDK] Rejection reason:", rejection.reason)
-        
+
         // Analyze failures and retry with maximum enhancement
         const failurePatterns = this.analyzeValidationFailures(validation, rejection)
-        
+
         const maxStrictOptions: PromptEnhancementOptions = {
           attemptNumber: 2,
           previousFailures: failurePatterns,
@@ -965,12 +1514,12 @@ This attempt MUST avoid these issues completely.
 
         const retryValidation = this.validateGeneratedCode(retryText)
         const retryRejection = this.shouldRejectGeneratedCode(retryText)
-        
+
         if (retryValidation.isValid && !retryRejection.shouldReject) {
           console.log("[VibeSDK] Code refinement successful with maximum strictness")
           return retryText
         }
-        
+
         console.error("[VibeSDK] Code refinement failed after maximum strictness retry, returning original code")
         return code // Return original code if refinement fails
       }
@@ -1016,7 +1565,7 @@ This attempt MUST avoid these issues completely.
       console.error("[VibeSDK] Code generation with validation failed:", error)
       const mockCode = this.getMockResponse(prompt)
       const validation = this.validateGeneratedCode(mockCode)
-      
+
       return {
         code: mockCode,
         validation,
@@ -1056,7 +1605,7 @@ This attempt MUST avoid these issues completely.
    */
   private inferContractType(prompt: string): import("./quality-assurance/types").ContractType {
     const lowerPrompt = prompt.toLowerCase()
-    
+
     if (lowerPrompt.includes('nft') || lowerPrompt.includes('non-fungible') || lowerPrompt.includes('collectible')) {
       return {
         category: 'nft',
@@ -1064,7 +1613,7 @@ This attempt MUST avoid these issues completely.
         features: this.extractFeatures(lowerPrompt, ['metadata', 'royalty', 'collection', 'minting'])
       }
     }
-    
+
     if (lowerPrompt.includes('token') || lowerPrompt.includes('fungible') || lowerPrompt.includes('currency')) {
       return {
         category: 'fungible-token',
@@ -1072,7 +1621,7 @@ This attempt MUST avoid these issues completely.
         features: this.extractFeatures(lowerPrompt, ['minting', 'burning', 'transfer', 'vault'])
       }
     }
-    
+
     if (lowerPrompt.includes('dao') || lowerPrompt.includes('governance') || lowerPrompt.includes('voting')) {
       return {
         category: 'dao',
@@ -1080,7 +1629,7 @@ This attempt MUST avoid these issues completely.
         features: this.extractFeatures(lowerPrompt, ['voting', 'proposal', 'member', 'treasury'])
       }
     }
-    
+
     if (lowerPrompt.includes('marketplace') || lowerPrompt.includes('trading') || lowerPrompt.includes('exchange')) {
       return {
         category: 'marketplace',
@@ -1088,7 +1637,7 @@ This attempt MUST avoid these issues completely.
         features: this.extractFeatures(lowerPrompt, ['listing', 'bidding', 'escrow', 'commission'])
       }
     }
-    
+
     return {
       category: 'generic',
       complexity: 'simple',
@@ -1108,29 +1657,29 @@ This attempt MUST avoid these issues completely.
    */
   private inferUserExperience(prompt: string, context?: string): 'beginner' | 'intermediate' | 'expert' {
     const combinedText = `${prompt} ${context || ''}`.toLowerCase()
-    
+
     // Expert indicators
     const expertKeywords = [
       'optimization', 'gas efficiency', 'advanced patterns', 'custom interfaces',
       'complex logic', 'sophisticated', 'enterprise', 'production scale',
       'performance', 'security audit', 'formal verification'
     ]
-    
+
     // Beginner indicators
     const beginnerKeywords = [
       'simple', 'basic', 'tutorial', 'learning', 'first time', 'beginner',
       'how to', 'getting started', 'introduction', 'easy', 'step by step'
     ]
-    
+
     const expertScore = expertKeywords.filter(keyword => combinedText.includes(keyword)).length
     const beginnerScore = beginnerKeywords.filter(keyword => combinedText.includes(keyword)).length
-    
+
     if (expertScore > beginnerScore && expertScore >= 2) {
       return 'expert'
     } else if (beginnerScore > expertScore && beginnerScore >= 2) {
       return 'beginner'
     }
-    
+
     return 'intermediate' // Default to intermediate
   }
 
@@ -1138,18 +1687,18 @@ This attempt MUST avoid these issues completely.
    * Analyze validation failures to create failure patterns for prompt enhancement
    */
   private analyzeValidationFailures(
-    validation: ValidationResult, 
+    validation: ValidationResult,
     rejection: { shouldReject: boolean; reason: string }
   ): FailurePattern[] {
     const patterns: FailurePattern[] = []
-    
+
     if (rejection.shouldReject) {
       if (rejection.reason.includes('undefined')) {
         patterns.push({
           type: 'undefined-values',
           frequency: 1,
           commonCauses: [
-            'Incomplete variable initialization', 
+            'Incomplete variable initialization',
             'Missing default values',
             'Placeholder undefined literals',
             'Uninitialized optional types'
@@ -1162,7 +1711,7 @@ This attempt MUST avoid these issues completely.
           ]
         })
       }
-      
+
       if (rejection.reason.includes('pub') || rejection.reason.includes('legacy')) {
         patterns.push({
           type: 'legacy-syntax',
@@ -1201,7 +1750,7 @@ This attempt MUST avoid these issues completely.
         })
       }
     }
-    
+
     if (!validation.isValid) {
       validation.errors?.forEach(error => {
         if (error.includes('bracket') || error.includes('parenthes') || error.includes('brace')) {
@@ -1222,7 +1771,7 @@ This attempt MUST avoid these issues completely.
             ]
           })
         }
-        
+
         if (error.includes('incomplete') || error.includes('missing') || error.includes('expected')) {
           patterns.push({
             type: 'incomplete-logic',
@@ -1262,7 +1811,7 @@ This attempt MUST avoid these issues completely.
         }
       })
     }
-    
+
     return patterns
   }
 
@@ -1358,7 +1907,7 @@ ${generationContext.userExperience === 'expert' ? '- Provide advanced insights a
     } catch (error) {
       console.error("[VibeSDK] Chat failed:", error)
       // Enhanced fallback response based on user experience
-      const experienceSpecificTips = generationContext.userExperience === 'beginner' 
+      const experienceSpecificTips = generationContext.userExperience === 'beginner'
         ? `
 🌟 **Getting Started Tips**:
 - Start with simple contracts to learn the basics
@@ -1366,13 +1915,13 @@ ${generationContext.userExperience === 'expert' ? '- Provide advanced insights a
 - Use the Flow Playground to test your code
 - Read the official Cadence documentation`
         : generationContext.userExperience === 'expert'
-        ? `
+          ? `
 🚀 **Advanced Considerations**:
 - Optimize for gas efficiency and performance
 - Implement sophisticated access control patterns
 - Consider formal verification for critical contracts
 - Use advanced Cadence features like entitlements`
-        : `
+          : `
 💡 **Development Tips**:
 - Follow established patterns and best practices
 - Test thoroughly before deployment
@@ -1399,6 +1948,658 @@ ${experienceSpecificTips}
 
 Let's vibe this into existence once my connection is restored! In the meantime, feel free to ask about specific Cadence patterns, Flow development concepts, or quality assurance practices.`
     }
+  }
+
+  // ===== FULL-STACK GENERATION CAPABILITIES =====
+
+  /**
+   * Parse natural language prompt to identify frontend and backend requirements
+   */
+  parseFullStackPrompt(prompt: string): ParsedPromptResult {
+    const lowerPrompt = prompt.toLowerCase()
+
+    // Determine project type
+    const projectType = this.identifyProjectType(lowerPrompt)
+
+    // Extract backend requirements
+    const backendRequirements = this.extractBackendRequirements(lowerPrompt, projectType)
+
+    // Extract frontend requirements
+    const frontendRequirements = this.extractFrontendRequirements(lowerPrompt, projectType)
+
+    // Extract integration requirements
+    const integrationRequirements = this.extractIntegrationRequirements(lowerPrompt, projectType)
+
+    // Calculate confidence based on specificity of requirements
+    const confidence = this.calculateParsingConfidence(
+      backendRequirements,
+      frontendRequirements,
+      integrationRequirements
+    )
+
+    return {
+      projectType,
+      backendRequirements,
+      frontendRequirements,
+      integrationRequirements,
+      confidence
+    }
+  }
+
+  /**
+   * Identify the type of project from the prompt
+   */
+  private identifyProjectType(prompt: string): ProjectType {
+    if (prompt.includes('marketplace') || prompt.includes('buy') && prompt.includes('sell')) {
+      return 'marketplace'
+    }
+    if (prompt.includes('nft') || prompt.includes('collectible') || prompt.includes('art')) {
+      return 'nft-collection'
+    }
+    if (prompt.includes('dao') || prompt.includes('governance') || prompt.includes('voting')) {
+      return 'dao'
+    }
+    if (prompt.includes('defi') || prompt.includes('staking') || prompt.includes('yield') || prompt.includes('liquidity')) {
+      return 'defi-protocol'
+    }
+    if (prompt.includes('token') && !prompt.includes('nft')) {
+      return 'token'
+    }
+    return 'custom'
+  }
+
+  /**
+   * Extract backend (smart contract) requirements from prompt
+   */
+  private extractBackendRequirements(prompt: string, projectType: ProjectType): BackendRequirements {
+    const contractTypes: string[] = []
+    const functions: FunctionRequirement[] = []
+    const events: EventRequirement[] = []
+    const resources: ResourceRequirement[] = []
+
+    // Determine contract types based on project type and prompt content
+    switch (projectType) {
+      case 'nft-collection':
+        contractTypes.push('NFT', 'Collection', 'Minter')
+        functions.push(
+          { name: 'mintNFT', purpose: 'Create new NFT', parameters: ['recipient', 'metadata'], returnType: 'Void', access: 'all' },
+          { name: 'borrowNFT', purpose: 'Get NFT reference', parameters: ['id'], returnType: '&NFT', access: 'all' }
+        )
+        events.push(
+          { name: 'Minted', purpose: 'NFT created', fields: ['id', 'recipient'] },
+          { name: 'Deposit', purpose: 'NFT deposited', fields: ['id', 'to'] }
+        )
+        resources.push(
+          { name: 'NFT', purpose: 'Individual NFT token', interfaces: ['NonFungibleToken.NFT'], functions: ['getViews', 'resolveView'] },
+          { name: 'Collection', purpose: 'NFT collection', interfaces: ['NonFungibleToken.Collection'], functions: ['deposit', 'withdraw', 'getIDs'] }
+        )
+        break
+
+      case 'marketplace':
+        contractTypes.push('Marketplace', 'SaleCollection')
+        functions.push(
+          { name: 'listForSale', purpose: 'List NFT for sale', parameters: ['tokenID', 'price'], returnType: 'Void', access: 'all' },
+          { name: 'purchase', purpose: 'Buy NFT', parameters: ['tokenID', 'recipient', 'payment'], returnType: 'Void', access: 'all' }
+        )
+        events.push(
+          { name: 'ForSale', purpose: 'NFT listed', fields: ['id', 'price', 'owner'] },
+          { name: 'TokenPurchased', purpose: 'NFT sold', fields: ['id', 'price', 'seller', 'buyer'] }
+        )
+        break
+
+      case 'token':
+        contractTypes.push('FungibleToken', 'Vault', 'Minter')
+        functions.push(
+          { name: 'mintTokens', purpose: 'Create new tokens', parameters: ['amount', 'recipient'], returnType: 'Void', access: 'all' },
+          { name: 'transfer', purpose: 'Transfer tokens', parameters: ['amount', 'recipient'], returnType: 'Void', access: 'all' }
+        )
+        break
+
+      default:
+        // Extract custom requirements from prompt
+        if (prompt.includes('mint')) {
+          functions.push({ name: 'mint', purpose: 'Create new items', parameters: ['recipient'], returnType: 'Void', access: 'all' })
+        }
+        if (prompt.includes('transfer')) {
+          functions.push({ name: 'transfer', purpose: 'Transfer items', parameters: ['recipient'], returnType: 'Void', access: 'all' })
+        }
+    }
+
+    return { contractTypes, functions, events, resources }
+  }
+
+  /**
+   * Extract frontend requirements from prompt
+   */
+  private extractFrontendRequirements(prompt: string, projectType: ProjectType): FrontendRequirements {
+    const pages: string[] = []
+    const components: string[] = []
+    const interactions: InteractionRequirement[] = []
+
+    // Default styling requirements
+    const styling: StylingRequirements = {
+      framework: 'tailwind',
+      theme: 'auto',
+      responsive: true,
+      accessibility: true
+    }
+
+    // Determine pages based on project type
+    switch (projectType) {
+      case 'nft-collection':
+        pages.push('Home', 'Collection', 'Mint', 'Profile')
+        components.push('NFTCard', 'MintForm', 'CollectionGrid', 'WalletConnect')
+        interactions.push(
+          { type: 'form', contractFunction: 'mintNFT', userInput: ['metadata', 'recipient'], feedback: ['success', 'error', 'loading'] },
+          { type: 'display', contractFunction: 'getIDs', userInput: [], feedback: ['loading', 'empty'] }
+        )
+        break
+
+      case 'marketplace':
+        pages.push('Home', 'Marketplace', 'Listing', 'Profile')
+        components.push('NFTCard', 'ListingForm', 'PurchaseButton', 'PriceDisplay')
+        interactions.push(
+          { type: 'form', contractFunction: 'listForSale', userInput: ['tokenID', 'price'], feedback: ['success', 'error'] },
+          { type: 'button', contractFunction: 'purchase', userInput: ['tokenID', 'payment'], feedback: ['success', 'error', 'loading'] }
+        )
+        break
+
+      case 'token':
+        pages.push('Home', 'Transfer', 'Balance')
+        components.push('BalanceDisplay', 'TransferForm', 'TransactionHistory')
+        interactions.push(
+          { type: 'form', contractFunction: 'transfer', userInput: ['amount', 'recipient'], feedback: ['success', 'error'] }
+        )
+        break
+
+      default:
+        pages.push('Home', 'Dashboard')
+        components.push('WalletConnect', 'ContractInteraction')
+    }
+
+    // Extract custom UI requirements from prompt
+    if (prompt.includes('dashboard')) pages.push('Dashboard')
+    if (prompt.includes('admin')) pages.push('Admin')
+    if (prompt.includes('profile')) pages.push('Profile')
+
+    return { pages, components, interactions, styling }
+  }
+
+  /**
+   * Extract integration requirements between frontend and backend
+   */
+  private extractIntegrationRequirements(prompt: string, projectType: ProjectType): IntegrationRequirements {
+    const apiEndpoints: string[] = []
+    const contractBindings: string[] = []
+    const dataFlow: DataFlowRequirement[] = []
+
+    // Generate API endpoints based on project type
+    switch (projectType) {
+      case 'nft-collection':
+        apiEndpoints.push('/api/mint', '/api/collection', '/api/metadata')
+        contractBindings.push('mintNFT', 'getIDs', 'borrowNFT')
+        dataFlow.push(
+          { source: 'MintForm', destination: 'mintNFT', transformation: 'form-to-transaction', validation: ['required-fields', 'wallet-connected'] },
+          { source: 'contract-events', destination: 'CollectionGrid', transformation: 'event-to-ui-update', validation: ['event-valid'] }
+        )
+        break
+
+      case 'marketplace':
+        apiEndpoints.push('/api/list', '/api/purchase', '/api/listings')
+        contractBindings.push('listForSale', 'purchase', 'getIDs')
+        dataFlow.push(
+          { source: 'ListingForm', destination: 'listForSale', transformation: 'form-to-transaction', validation: ['price-valid', 'nft-owned'] },
+          { source: 'PurchaseButton', destination: 'purchase', transformation: 'click-to-transaction', validation: ['sufficient-balance'] }
+        )
+        break
+
+      default:
+        apiEndpoints.push('/api/interact')
+        contractBindings.push('defaultFunction')
+    }
+
+    return { apiEndpoints, contractBindings, dataFlow }
+  }
+
+  /**
+   * Calculate confidence score for parsing results
+   */
+  private calculateParsingConfidence(
+    backend: BackendRequirements,
+    frontend: FrontendRequirements,
+    integration: IntegrationRequirements
+  ): number {
+    let score = 0
+
+    // Backend completeness (40% of score)
+    if (backend.contractTypes.length > 0) score += 10
+    if (backend.functions.length > 0) score += 15
+    if (backend.events.length > 0) score += 10
+    if (backend.resources.length > 0) score += 5
+
+    // Frontend completeness (35% of score)
+    if (frontend.pages.length > 0) score += 15
+    if (frontend.components.length > 0) score += 10
+    if (frontend.interactions.length > 0) score += 10
+
+    // Integration completeness (25% of score)
+    if (integration.apiEndpoints.length > 0) score += 10
+    if (integration.contractBindings.length > 0) score += 10
+    if (integration.dataFlow.length > 0) score += 5
+
+    return Math.min(score, 100)
+  }
+
+  /**
+   * Analyze project structure and identify components needed
+   */
+  analyzeProjectStructure(parsedPrompt: ParsedPromptResult, projectName: string): ProjectStructure {
+    const directories: Directory[] = []
+    const files: GeneratedFile[] = []
+    const configurations: ConfigurationFile[] = []
+
+    // Create standard Next.js directory structure
+    directories.push(
+      { name: 'app', path: 'app', children: [] },
+      { name: 'components', path: 'components', children: [] },
+      { name: 'lib', path: 'lib', children: [] },
+      { name: 'contracts', path: 'contracts', children: [] },
+      { name: 'public', path: 'public', children: [] }
+    )
+
+    // Add API routes directory
+    const apiDir: Directory = { name: 'api', path: 'app/api', children: [] }
+    directories.find(d => d.name === 'app')?.children.push(apiDir)
+
+    // Generate files based on requirements
+
+    // Smart contract files
+    parsedPrompt.backendRequirements.contractTypes.forEach(contractType => {
+      files.push({
+        name: `${contractType}.cdc`,
+        path: `contracts/${contractType}.cdc`,
+        content: '', // Will be generated later
+        type: 'contract'
+      })
+    })
+
+    // Frontend page files
+    parsedPrompt.frontendRequirements.pages.forEach(page => {
+      files.push({
+        name: `page.tsx`,
+        path: `app/${page.toLowerCase()}/page.tsx`,
+        content: '', // Will be generated later
+        type: 'component'
+      })
+    })
+
+    // Component files
+    parsedPrompt.frontendRequirements.components.forEach(component => {
+      files.push({
+        name: `${component.toLowerCase()}.tsx`,
+        path: `components/${component.toLowerCase()}.tsx`,
+        content: '', // Will be generated later
+        type: 'component'
+      })
+    })
+
+    // API route files
+    parsedPrompt.integrationRequirements.apiEndpoints.forEach(endpoint => {
+      const routeName = endpoint.replace('/api/', '')
+      files.push({
+        name: 'route.ts',
+        path: `app/api/${routeName}/route.ts`,
+        content: '', // Will be generated later
+        type: 'api'
+      })
+    })
+
+    // Configuration files
+    configurations.push(
+      {
+        name: 'package.json',
+        path: 'package.json',
+        content: '', // Will be generated later
+        configType: 'package'
+      },
+      {
+        name: 'next.config.mjs',
+        path: 'next.config.mjs',
+        content: '', // Will be generated later
+        configType: 'next'
+      },
+      {
+        name: 'tailwind.config.ts',
+        path: 'tailwind.config.ts',
+        content: '', // Will be generated later
+        configType: 'tailwind'
+      },
+      {
+        name: 'tsconfig.json',
+        path: 'tsconfig.json',
+        content: '', // Will be generated later
+        configType: 'typescript'
+      },
+      {
+        name: '.env.example',
+        path: '.env.example',
+        content: '', // Will be generated later
+        configType: 'env'
+      }
+    )
+
+    return { directories, files, configurations }
+  }
+
+  /**
+   * Generate full-stack dApp project
+   */
+  async generateFullStackProject(options: FullStackGenerationOptions): Promise<FullStackGenerationResult> {
+    console.log(`[VibeSDK] Starting full-stack generation for project: ${options.projectName}`)
+
+    // Parse the prompt to understand requirements
+    const parsedPrompt = this.parseFullStackPrompt(options.prompt)
+    console.log(`[VibeSDK] Parsed prompt with ${parsedPrompt.confidence}% confidence as ${parsedPrompt.projectType} project`)
+
+    // Analyze project structure
+    const projectStructure = this.analyzeProjectStructure(parsedPrompt, options.projectName)
+
+    // Initialize result containers
+    const smartContracts: GeneratedContract[] = []
+    const frontendComponents: GeneratedComponent[] = []
+    const apiRoutes: GeneratedAPIRoute[] = []
+    const configurations: GeneratedConfig[] = []
+    const integrationCode: IntegrationCode = { hooks: [], utilities: [], types: [] }
+
+    try {
+      // Generate smart contracts if backend is needed
+      if (parsedPrompt.backendRequirements.contractTypes.length > 0) {
+        console.log(`[VibeSDK] Generating ${parsedPrompt.backendRequirements.contractTypes.length} smart contracts`)
+
+        for (const contractType of parsedPrompt.backendRequirements.contractTypes) {
+          const contractPrompt = this.buildContractPrompt(contractType, parsedPrompt, options)
+          const contractCode = await this.generateCode({
+            prompt: contractPrompt,
+            context: options.context,
+            temperature: options.temperature
+          })
+
+          const validation = this.validateGeneratedCode(contractCode)
+
+          smartContracts.push({
+            filename: `${contractType}.cdc`,
+            code: contractCode,
+            validation,
+            dependencies: this.extractContractDependencies(contractCode)
+          })
+        }
+      }
+
+      // Generate frontend components if frontend is needed
+      if (options.includeFrontend && parsedPrompt.frontendRequirements.components.length > 0) {
+        console.log(`[VibeSDK] Generating ${parsedPrompt.frontendRequirements.components.length} frontend components`)
+
+        for (const componentName of parsedPrompt.frontendRequirements.components) {
+          const componentCode = this.generateReactComponent(componentName, parsedPrompt, smartContracts)
+
+          frontendComponents.push({
+            filename: `${componentName.toLowerCase()}.tsx`,
+            code: componentCode,
+            componentType: this.determineComponentType(componentName),
+            dependencies: this.extractComponentDependencies(componentCode),
+            contractIntegrations: this.identifyContractIntegrations(componentCode, smartContracts)
+          })
+        }
+
+        // Generate pages
+        for (const pageName of parsedPrompt.frontendRequirements.pages) {
+          const pageCode = this.generateReactPage(pageName, parsedPrompt, frontendComponents)
+
+          frontendComponents.push({
+            filename: `page.tsx`,
+            code: pageCode,
+            componentType: 'page',
+            dependencies: this.extractComponentDependencies(pageCode),
+            contractIntegrations: []
+          })
+        }
+      }
+
+      // Generate API routes if API is needed
+      if (options.includeAPI && parsedPrompt.integrationRequirements.apiEndpoints.length > 0) {
+        console.log(`[VibeSDK] Generating ${parsedPrompt.integrationRequirements.apiEndpoints.length} API routes`)
+
+        for (const endpoint of parsedPrompt.integrationRequirements.apiEndpoints) {
+          const routeCode = this.generateAPIRoute(endpoint, parsedPrompt, smartContracts)
+
+          apiRoutes.push({
+            filename: 'route.ts',
+            code: routeCode,
+            endpoint: endpoint,
+            methods: this.extractHTTPMethods(routeCode),
+            contractCalls: this.extractContractCalls(routeCode)
+          })
+        }
+      }
+
+      // Generate configuration files
+      console.log(`[VibeSDK] Generating configuration files`)
+
+      configurations.push(
+        {
+          filename: 'package.json',
+          code: this.generatePackageJson(options, parsedPrompt),
+          configType: 'package'
+        },
+        {
+          filename: 'next.config.mjs',
+          code: this.generateNextConfig(options),
+          configType: 'next'
+        },
+        {
+          filename: 'tailwind.config.ts',
+          code: this.generateTailwindConfig(options),
+          configType: 'tailwind'
+        },
+        {
+          filename: 'tsconfig.json',
+          code: this.generateTSConfig(options),
+          configType: 'typescript'
+        },
+        {
+          filename: '.env.example',
+          code: this.generateEnvExample(options),
+          configType: 'env'
+        }
+      )
+
+      // Generate integration code (hooks, utilities, types)
+      integrationCode.hooks = this.generateReactHooks(smartContracts, parsedPrompt)
+      integrationCode.utilities = this.generateUtilities(smartContracts, parsedPrompt)
+      integrationCode.types = this.generateTypeDefinitions(smartContracts, parsedPrompt)
+
+      console.log(`[VibeSDK] Full-stack generation completed successfully`)
+
+      return {
+        smartContracts,
+        frontendComponents,
+        apiRoutes,
+        configurations,
+        projectStructure,
+        integrationCode
+      }
+
+    } catch (error) {
+      console.error(`[VibeSDK] Full-stack generation failed:`, error)
+      throw new Error(`Full-stack generation failed: ${error}`)
+    }
+  }
+
+  // Helper methods for full-stack generation (stubs for now - will be implemented in subsequent tasks)
+
+  private buildContractPrompt(contractType: string, parsedPrompt: ParsedPromptResult, options: FullStackGenerationOptions): string {
+    return `Generate a ${contractType} smart contract for a ${parsedPrompt.projectType} project. ${options.prompt}`
+  }
+
+  private extractContractDependencies(code: string): string[] {
+    const imports = code.match(/import\s+"([^"]+)"/g) || []
+    return imports.map(imp => imp.replace(/import\s+"([^"]+)"/, '$1'))
+  }
+
+  private generateReactComponent(componentName: string, parsedPrompt: ParsedPromptResult, contracts: GeneratedContract[]): string {
+    return `// ${componentName} component - generated by VibeSDK\n// TODO: Implement in subsequent tasks`
+  }
+
+  private generateReactPage(pageName: string, parsedPrompt: ParsedPromptResult, components: GeneratedComponent[]): string {
+    return `// ${pageName} page - generated by VibeSDK\n// TODO: Implement in subsequent tasks`
+  }
+
+  private generateAPIRoute(endpoint: string, parsedPrompt: ParsedPromptResult, contracts: GeneratedContract[]): string {
+    return `// API route for ${endpoint} - generated by VibeSDK\n// TODO: Implement in subsequent tasks`
+  }
+
+  private determineComponentType(componentName: string): 'page' | 'component' | 'layout' {
+    if (componentName.toLowerCase().includes('layout')) return 'layout'
+    if (componentName.toLowerCase().includes('page')) return 'page'
+    return 'component'
+  }
+
+  private extractComponentDependencies(code: string): string[] {
+    const imports = code.match(/import.*from\s+['"]([^'"]+)['"]/g) || []
+    return imports.map(imp => imp.replace(/import.*from\s+['"]([^'"]+)['"]/, '$1'))
+  }
+
+  private identifyContractIntegrations(code: string, contracts: GeneratedContract[]): ContractIntegration[] {
+    // Stub implementation - will be enhanced in subsequent tasks
+    return []
+  }
+
+  private extractHTTPMethods(code: string): string[] {
+    const methods = []
+    if (code.includes('export async function GET')) methods.push('GET')
+    if (code.includes('export async function POST')) methods.push('POST')
+    if (code.includes('export async function PUT')) methods.push('PUT')
+    if (code.includes('export async function DELETE')) methods.push('DELETE')
+    return methods
+  }
+
+  private extractContractCalls(code: string): string[] {
+    // Stub implementation - will be enhanced in subsequent tasks
+    return []
+  }
+
+  private generatePackageJson(options: FullStackGenerationOptions, parsedPrompt: ParsedPromptResult): string {
+    return JSON.stringify({
+      name: options.projectName,
+      version: "0.1.0",
+      private: true,
+      scripts: {
+        dev: "next dev",
+        build: "next build",
+        start: "next start",
+        lint: "next lint"
+      },
+      dependencies: {
+        "next": "15.2.4",
+        "react": "19",
+        "react-dom": "19",
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "typescript": "^5",
+        "tailwindcss": "^4.1.9",
+        "postcss": "^8",
+        "autoprefixer": "^10"
+      }
+    }, null, 2)
+  }
+
+  private generateNextConfig(options: FullStackGenerationOptions): string {
+    return `/** @type {import('next').NextConfig} */
+const nextConfig = {
+  experimental: {
+    appDir: true,
+  },
+}
+
+module.exports = nextConfig`
+  }
+
+  private generateTailwindConfig(options: FullStackGenerationOptions): string {
+    return `import type { Config } from 'tailwindcss'
+
+const config: Config = {
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+export default config`
+  }
+
+  private generateTSConfig(options: FullStackGenerationOptions): string {
+    return JSON.stringify({
+      compilerOptions: {
+        target: "es5",
+        lib: ["dom", "dom.iterable", "es6"],
+        allowJs: true,
+        skipLibCheck: true,
+        strict: true,
+        noEmit: true,
+        esModuleInterop: true,
+        module: "esnext",
+        moduleResolution: "bundler",
+        resolveJsonModule: true,
+        isolatedModules: true,
+        jsx: "preserve",
+        incremental: true,
+        plugins: [
+          {
+            name: "next"
+          }
+        ],
+        baseUrl: ".",
+        paths: {
+          "@/*": ["./*"]
+        }
+      },
+      include: ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+      exclude: ["node_modules"]
+    }, null, 2)
+  }
+
+  private generateEnvExample(options: FullStackGenerationOptions): string {
+    return `# Flow Network Configuration
+NEXT_PUBLIC_FLOW_NETWORK=testnet
+NEXT_PUBLIC_FLOW_ACCESS_NODE=https://rest-testnet.onflow.org
+
+# AI Configuration (Optional)
+OPENAI_API_KEY=your_openai_api_key_here
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+
+# Application Configuration
+NEXT_PUBLIC_APP_NAME=${options.projectName}
+NEXT_PUBLIC_APP_URL=http://localhost:3000`
+  }
+
+  private generateReactHooks(contracts: GeneratedContract[], parsedPrompt: ParsedPromptResult): string[] {
+    // Stub implementation - will be enhanced in subsequent tasks
+    return [`// React hooks for contract integration - TODO: Implement in subsequent tasks`]
+  }
+
+  private generateUtilities(contracts: GeneratedContract[], parsedPrompt: ParsedPromptResult): string[] {
+    // Stub implementation - will be enhanced in subsequent tasks
+    return [`// Utility functions for contract integration - TODO: Implement in subsequent tasks`]
+  }
+
+  private generateTypeDefinitions(contracts: GeneratedContract[], parsedPrompt: ParsedPromptResult): string[] {
+    // Stub implementation - will be enhanced in subsequent tasks
+    return [`// TypeScript type definitions - TODO: Implement in subsequent tasks`]
   }
 }
 

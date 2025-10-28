@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "name": "Context7 MCP Integration",
+  "description": "Monitors key files for changes and triggers context7 MCP analysis to maintain contextual awareness across the VibeMore codebase",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "lib/**/*.ts",
+      "components/**/*.tsx",
+      "app/**/*.tsx",
+      "app/**/*.ts",
+      "**/*.cdc"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Analyze the changed files using context7 MCP to understand the contextual relationships and dependencies. Provide insights on how these changes affect the overall system architecture, component relationships, and potential impacts on the AI code generation pipeline. Focus on maintaining consistency across the VibeMore platform's Flow blockchain integration and smart contract generation capabilities."
+  }
+}

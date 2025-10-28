@@ -3,15 +3,23 @@
 import { useState, useEffect, useRef } from "react"
 import { ChatPanel } from "@/components/chat-panel"
 import { CodeEditor } from "@/components/code-editor"
+import { ProjectPreview } from "@/components/project-preview"
+import { ComponentRelationshipView } from "@/components/component-relationship-view"
+import { FileBrowser } from "@/components/file-browser"
 import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Icons } from "@/components/icons"
 import { useRouter } from "next/navigation"
 import type { Template } from "@/lib/templates"
+import { ProjectStructure, GeneratedFile } from "@/components/types/chat-types"
 
 export default function Home() {
   const router = useRouter()
   const [generatedCode, setGeneratedCode] = useState<string>()
+  const [currentProject, setCurrentProject] = useState<ProjectStructure | null>(null)
+  const [selectedFile, setSelectedFile] = useState<GeneratedFile | null>(null)
   const [showEditor, setShowEditor] = useState(false)
+  const [activeView, setActiveView] = useState<'editor' | 'project' | 'relationships'>('editor')
   const editorRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -41,6 +49,39 @@ export default function Home() {
     }, 300)
   }
 
+  const handleProjectGenerated = (project: ProjectStructure) => {
+    setCurrentProject(project)
+    setActiveView('project')
+  }
+
+  const handleFileSelect = (file: GeneratedFile) => {
+    setSelectedFile(file)
+    // If it's a contract file, also set it as the generated code for the editor
+    if (file.type === 'contract') {
+      // In a real implementation, you'd fetch the actual file content
+      setGeneratedCode(file.preview || `// ${file.path}\n// Contract content would be loaded here`)
+    }
+  }
+
+  const handleComponentSelect = (componentPath: string, componentType: string) => {
+    const file = currentProject?.files.find(f => f.path === componentPath)
+    if (file) {
+      handleFileSelect(file)
+    }
+  }
+
+  const handleProjectExport = (project: ProjectStructure) => {
+    // In a real implementation, this would trigger a download
+    console.log('Exporting project:', project.name)
+    alert(`Exporting ${project.name} - this would download a ZIP file in a real implementation`)
+  }
+
+  const handleProjectDeploy = (project: ProjectStructure) => {
+    // In a real implementation, this would trigger deployment
+    console.log('Deploying project:', project.name)
+    alert(`Deploying ${project.name} - this would start the deployment process in a real implementation`)
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <div className="grid-lines relative min-h-[90vh] corner-cross">
@@ -56,12 +97,11 @@ export default function Home() {
             </div>
 
             <h1 className="mb-6 text-6xl font-bold leading-tight tracking-tight lg:text-7xl text-balance">
-              Build Flow smart contracts with natural language
+              Build complete Flow dApps with natural language
             </h1>
 
             <p className="mb-8 text-lg text-muted-foreground leading-relaxed text-pretty max-w-xl">
-              VibeMore transforms your ideas into production-ready Cadence code. Describe what you want to build, and
-              let AI handle the complexity.
+              VibeMore transforms your ideas into production-ready full-stack dApps. Generate smart contracts, React frontends, and API routes all from a single conversation.
             </p>
 
             <div className="flex flex-wrap items-center gap-4">
@@ -148,10 +188,52 @@ export default function Home() {
       {showEditor && (
         <div ref={editorRef} className="flex flex-1 border-t border-border">
           <div className="w-96 border-r border-border bg-card">
-            <ChatPanel onCodeGenerated={setGeneratedCode} />
+            <ChatPanel 
+              onCodeGenerated={setGeneratedCode}
+              onProjectGenerated={handleProjectGenerated}
+              onComponentSelected={handleComponentSelect}
+            />
           </div>
           <div className="flex-1 bg-background">
-            <CodeEditor initialCode={generatedCode} key={generatedCode} />
+            {currentProject ? (
+              <Tabs value={activeView} onValueChange={(value) => setActiveView(value as any)} className="h-full flex flex-col">
+                <div className="border-b border-border px-4 py-2">
+                  <TabsList className="grid w-full grid-cols-4 max-w-md">
+                    <TabsTrigger value="editor">Editor</TabsTrigger>
+                    <TabsTrigger value="project">Project</TabsTrigger>
+                    <TabsTrigger value="relationships">Relations</TabsTrigger>
+                    <TabsTrigger value="browser">Browser</TabsTrigger>
+                  </TabsList>
+                </div>
+                <div className="flex-1">
+                  <TabsContent value="editor" className="h-full mt-0">
+                    <CodeEditor initialCode={generatedCode} key={generatedCode} />
+                  </TabsContent>
+                  <TabsContent value="project" className="h-full mt-0 p-4">
+                    <ProjectPreview 
+                      project={currentProject}
+                      onFileSelect={handleFileSelect}
+                      onProjectExport={handleProjectExport}
+                      onProjectDeploy={handleProjectDeploy}
+                    />
+                  </TabsContent>
+                  <TabsContent value="relationships" className="h-full mt-0 p-4">
+                    <ComponentRelationshipView 
+                      project={currentProject}
+                      onComponentSelect={handleComponentSelect}
+                    />
+                  </TabsContent>
+                  <TabsContent value="browser" className="h-full mt-0 p-4">
+                    <FileBrowser 
+                      file={selectedFile}
+                      onFileClose={() => setSelectedFile(null)}
+                    />
+                  </TabsContent>
+                </div>
+              </Tabs>
+            ) : (
+              <CodeEditor initialCode={generatedCode} key={generatedCode} />
+            )}
           </div>
         </div>
       )}

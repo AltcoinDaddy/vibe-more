@@ -15,6 +15,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  ChevronDown,
   ExternalLink,
   Copy,
   Check,
@@ -23,6 +24,14 @@ import {
   Loader2,
   Wallet,
   LogOut,
+  Layout,
+  Server,
+  Settings,
+  Link,
+  File,
+  FileText,
+  Folder,
+  Lightbulb,
 } from "lucide-react"
 
 export const Icons = {
@@ -42,12 +51,21 @@ export const Icons = {
   menu: Menu,
   x: X,
   chevronRight: ChevronRight,
+  chevronDown: ChevronDown,
   externalLink: ExternalLink,
   copy: Copy,
   check: Check,
   alertCircle: AlertCircle,
   info: Info,
   loader: Loader2,
+  layout: Layout,
+  server: Server,
+  settings: Settings,
+  link: Link,
+  file: File,
+  fileText: FileText,
+  folder: Folder,
+  lightbulb: Lightbulb,
 }
 
 // Additional icon exports for wallet functionality

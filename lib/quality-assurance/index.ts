@@ -200,3 +200,44 @@ export {
   type SystemStatus,
   type MonitoringDashboard
 } from './monitoring-controller'
+
+// Full-Stack Quality Assurance Components
+// Temporarily disabled due to syntax errors
+// export * from './fullstack-validation-system'
+// export * from './fullstack-validation-helpers'
+// export * from './project-compilation-validator'
+// export * from './fullstack-integration-tester'
+
+// export {
+//   FullStackValidationSystem,
+//   fullStackValidationSystem,
+//   type FullStackValidationResult,
+//   type FullStackValidationContext,
+//   type ComponentValidationResult,
+//   type APIRouteValidationResult,
+//   type CrossComponentConsistencyResult,
+//   type ProjectCompilationResult
+// } from './fullstack-validation-system'
+
+export {
+  FullStackValidationHelpers,
+  fullStackValidationHelpers
+} from './fullstack-validation-helpers'
+
+export {
+  ProjectCompilationValidator,
+  projectCompilationValidator,
+  type ProjectCompilationValidationResult,
+  type TypeScriptCompilationResult,
+  type NextJSBuildValidationResult,
+  type CadenceCompilationResult,
+  type TestingSetupResult
+} from './project-compilation-validator'
+
+export {
+  FullStackIntegrationTester,
+  fullStackIntegrationTester,
+  type IntegrationTestSuite,
+  type IntegrationTest,
+  type IntegrationTestResult
+} from './fullstack-integration-tester'
