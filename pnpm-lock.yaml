@@ -25,7 +25,7 @@ importers:
         version: 4.7.0(monaco-editor@0.54.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@onflow/fcl':
         specifier: ^1.20.2
-        version: 1.20.2(@types/react@19.2.0)(google-protobuf@3.21.4)(jiti@1.21.7)(postcss@8.5.6)(react@19.2.0)(typescript@5.9.3)(yaml@2.8.1)(zod@3.25.76)
+        version: 1.20.2(@types/react@19.2.0)(google-protobuf@3.21.4)(jiti@1.21.7)(postcss@8.5.6)(react@19.2.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)(zod@3.25.76)
       '@onflow/types':
         specifier: ^1.4.2
         version: 1.4.2
@@ -201,12 +201,21 @@ importers:
       '@vitest/ui':
         specifier: ^3.2.4
         version: 3.2.4(vitest@3.2.4)
+      eslint-plugin-local:
+        specifier: ^1.0.0
+        version: 1.0.0
+      husky:
+        specifier: ^8.0.3
+        version: 8.0.3
       postcss:
         specifier: ^8.5
         version: 8.5.6
       tailwindcss:
         specifier: ^4.1.9
         version: 4.1.14
+      tsx:
+        specifier: ^4.7.0
+        version: 4.20.6
       tw-animate-css:
         specifier: 1.3.3
         version: 1.3.3
@@ -215,7 +224,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^3.2.4
-        version: 3.2.4(@types/node@22.18.8)(@vitest/ui@3.2.4)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1)
+        version: 3.2.4(@types/node@22.18.8)(@vitest/ui@3.2.4)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1)
 
 packages:
 
@@ -2207,6 +2216,9 @@ packages:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
     engines: {node: '>=6'}
 
+  eslint-plugin-local@1.0.0:
+    resolution: {integrity: sha512-bcwcQnKL/Iw5Vi/F2lG1he5oKD2OGjhsLmrcctkWrWq5TujgiaYb0cj3pZgr3XI54inNVnneOFdAx1daLoYLJQ==}
+
   estree-walker@3.0.3:
     resolution: {integrity: sha512-7RUKfXgSMMkzt6ZuXmqapOurLGPPfgj6l9uRZ7lRGolvk0y2yocc35LdcxKC5PQZdn2DMqioAQ2NoWcrTKmm6g==}
 
@@ -2302,6 +2314,9 @@ packages:
     resolution: {integrity: sha512-FJhYRoDaiatfEkUK8HKlicmu/3SGFD51q3itKDGoSTysQJBnfOcxU5GxnhE1E6soB76MbT0MBtnKJuXyAx+96Q==}
     engines: {node: '>=6'}
 
+  get-tsconfig@4.13.0:
+    resolution: {integrity: sha512-1VKTZJCwBrvbd+Wn3AOgQP/2Av+TfTCOlE4AcRJE72W1ksZXbAx8PPBR9RzgTeSPzlPMHrbANMH3LbltH73wxQ==}
+
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
@@ -2329,6 +2344,11 @@ packages:
 
   hey-listen@1.0.8:
     resolution: {integrity: sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==}
+
+  husky@8.0.3:
+    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   idb-keyval@6.2.2:
     resolution: {integrity: sha512-yjD9nARJ/jb1g+CvD0tlhUHOrJ9Sy0P8T9MF3YaLlHnSRpwPfpTX0XIvpmw3gAJUmEu3FiICLBDPXVwyEvrleg==}
@@ -2935,6 +2955,9 @@ packages:
   require-main-filename@2.0.0:
     resolution: {integrity: sha512-NKN5kMDylKuldxYLSUfrbo5Tuzh4hd+2E8NPPX02mZtn1VuREQToYe/ZdlJy+J3uCpfaiGF05e7B8W0iXbQHmg==}
 
+  resolve-pkg-maps@1.0.0:
+    resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
+
   resolve@1.22.10:
     resolution: {integrity: sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==}
     engines: {node: '>= 0.4'}
@@ -3164,6 +3187,11 @@ packages:
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+
+  tsx@4.20.6:
+    resolution: {integrity: sha512-ytQKuwgmrrkDTFP4LjR0ToE2nqgy886GpvRSpU0JAnrdBYppuY5rLkRUYPU1yCryb24SsKBTL/hlDQAEFVwtZg==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
 
   tw-animate-css@1.3.3:
     resolution: {integrity: sha512-tXE2TRWrskc4TU3RDd7T8n8Np/wCfoeH9gz22c7PzYqNPQ9FBGFbWWzwL0JyHcFp+jHozmF76tbHfPAx22ua2Q==}
@@ -3903,7 +3931,7 @@ snapshots:
       - google-protobuf
       - utf-8-validate
 
-  '@onflow/fcl-wc@6.0.7(@onflow/fcl-core@1.21.2(google-protobuf@3.21.4))(@types/react@19.2.0)(jiti@1.21.7)(postcss@8.5.6)(react@19.2.0)(typescript@5.9.3)(yaml@2.8.1)(zod@3.25.76)':
+  '@onflow/fcl-wc@6.0.7(@onflow/fcl-core@1.21.2(google-protobuf@3.21.4))(@types/react@19.2.0)(jiti@1.21.7)(postcss@8.5.6)(react@19.2.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)(zod@3.25.76)':
     dependencies:
       '@babel/runtime': 7.28.4
       '@onflow/config': 1.6.1
@@ -3914,9 +3942,9 @@ snapshots:
       '@walletconnect/types': 2.21.10
       '@walletconnect/universal-provider': 2.21.10(typescript@5.9.3)(zod@3.25.76)
       '@walletconnect/utils': 2.21.10(typescript@5.9.3)(zod@3.25.76)
-      postcss-cli: 11.0.1(jiti@1.21.7)(postcss@8.5.6)
+      postcss-cli: 11.0.1(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.6)
       preact: 10.27.2
-      tailwindcss: 3.4.18(yaml@2.8.1)
+      tailwindcss: 3.4.18(tsx@4.20.6)(yaml@2.8.1)
     transitivePeerDependencies:
       - '@azure/app-configuration'
       - '@azure/cosmos'
@@ -3950,12 +3978,12 @@ snapshots:
       - yaml
       - zod
 
-  '@onflow/fcl@1.20.2(@types/react@19.2.0)(google-protobuf@3.21.4)(jiti@1.21.7)(postcss@8.5.6)(react@19.2.0)(typescript@5.9.3)(yaml@2.8.1)(zod@3.25.76)':
+  '@onflow/fcl@1.20.2(@types/react@19.2.0)(google-protobuf@3.21.4)(jiti@1.21.7)(postcss@8.5.6)(react@19.2.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)(zod@3.25.76)':
     dependencies:
       '@babel/runtime': 7.28.4
       '@onflow/config': 1.6.1
       '@onflow/fcl-core': 1.21.2(google-protobuf@3.21.4)
-      '@onflow/fcl-wc': 6.0.7(@onflow/fcl-core@1.21.2(google-protobuf@3.21.4))(@types/react@19.2.0)(jiti@1.21.7)(postcss@8.5.6)(react@19.2.0)(typescript@5.9.3)(yaml@2.8.1)(zod@3.25.76)
+      '@onflow/fcl-wc': 6.0.7(@onflow/fcl-core@1.21.2(google-protobuf@3.21.4))(@types/react@19.2.0)(jiti@1.21.7)(postcss@8.5.6)(react@19.2.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)(zod@3.25.76)
       '@onflow/interaction': 0.0.11
       '@onflow/rlp': 1.2.4
       '@onflow/sdk': 1.10.2
@@ -5024,13 +5052,13 @@ snapshots:
       chai: 5.3.3
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.2.4(vite@7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1))':
+  '@vitest/mocker@3.2.4(vite@7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1))':
     dependencies:
       '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.19
     optionalDependencies:
-      vite: 7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1)
+      vite: 7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1)
 
   '@vitest/pretty-format@3.2.4':
     dependencies:
@@ -5061,7 +5089,7 @@ snapshots:
       sirv: 3.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 2.0.0
-      vitest: 3.2.4(@types/node@22.18.8)(@vitest/ui@3.2.4)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1)
+      vitest: 3.2.4(@types/node@22.18.8)(@vitest/ui@3.2.4)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1)
 
   '@vitest/utils@3.2.4':
     dependencies:
@@ -5762,6 +5790,8 @@ snapshots:
 
   escalade@3.2.0: {}
 
+  eslint-plugin-local@1.0.0: {}
+
   estree-walker@3.0.3:
     dependencies:
       '@types/estree': 1.0.8
@@ -5837,6 +5867,10 @@ snapshots:
 
   get-nonce@1.0.1: {}
 
+  get-tsconfig@4.13.0:
+    dependencies:
+      resolve-pkg-maps: 1.0.0
+
   glob-parent@5.1.2:
     dependencies:
       is-glob: 4.0.3
@@ -5875,6 +5909,8 @@ snapshots:
       function-bind: 1.1.2
 
   hey-listen@1.0.8: {}
+
+  husky@8.0.3: {}
 
   idb-keyval@6.2.2: {}
 
@@ -6212,14 +6248,14 @@ snapshots:
 
   pngjs@5.0.0: {}
 
-  postcss-cli@11.0.1(jiti@1.21.7)(postcss@8.5.6):
+  postcss-cli@11.0.1(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.6):
     dependencies:
       chokidar: 3.6.0
       dependency-graph: 1.0.0
       fs-extra: 11.3.2
       picocolors: 1.1.1
       postcss: 8.5.6
-      postcss-load-config: 5.1.0(jiti@1.21.7)(postcss@8.5.6)
+      postcss-load-config: 5.1.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.6)
       postcss-reporter: 7.1.0(postcss@8.5.6)
       pretty-hrtime: 1.0.3
       read-cache: 1.0.0
@@ -6242,20 +6278,22 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.5.6
 
-  postcss-load-config@5.1.0(jiti@1.21.7)(postcss@8.5.6):
+  postcss-load-config@5.1.0(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.6):
     dependencies:
       lilconfig: 3.1.3
       yaml: 2.8.1
     optionalDependencies:
       jiti: 1.21.7
       postcss: 8.5.6
+      tsx: 4.20.6
 
-  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.5.6)(yaml@2.8.1):
+  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.6)(yaml@2.8.1):
     dependencies:
       lilconfig: 3.1.3
     optionalDependencies:
       jiti: 1.21.7
       postcss: 8.5.6
+      tsx: 4.20.6
       yaml: 2.8.1
 
   postcss-nested@6.2.0(postcss@8.5.6):
@@ -6424,6 +6462,8 @@ snapshots:
   require-directory@2.1.1: {}
 
   require-main-filename@2.0.0: {}
+
+  resolve-pkg-maps@1.0.0: {}
 
   resolve@1.22.10:
     dependencies:
@@ -6606,7 +6646,7 @@ snapshots:
     dependencies:
       tailwindcss: 4.1.14
 
-  tailwindcss@3.4.18(yaml@2.8.1):
+  tailwindcss@3.4.18(tsx@4.20.6)(yaml@2.8.1):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -6625,7 +6665,7 @@ snapshots:
       postcss: 8.5.6
       postcss-import: 15.1.0(postcss@8.5.6)
       postcss-js: 4.1.0(postcss@8.5.6)
-      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.5.6)(yaml@2.8.1)
+      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.5.6)(tsx@4.20.6)(yaml@2.8.1)
       postcss-nested: 6.2.0(postcss@8.5.6)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.10
@@ -6690,6 +6730,13 @@ snapshots:
   tslib@1.14.1: {}
 
   tslib@2.8.1: {}
+
+  tsx@4.20.6:
+    dependencies:
+      esbuild: 0.25.10
+      get-tsconfig: 4.13.0
+    optionalDependencies:
+      fsevents: 2.3.3
 
   tw-animate-css@1.3.3: {}
 
@@ -6789,13 +6836,13 @@ snapshots:
       d3-time: 3.1.0
       d3-timer: 3.0.1
 
-  vite-node@3.2.4(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1):
+  vite-node@3.2.4(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3
       es-module-lexer: 1.7.0
       pathe: 2.0.3
-      vite: 7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1)
+      vite: 7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -6810,7 +6857,7 @@ snapshots:
       - tsx
       - yaml
 
-  vite@7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1):
+  vite@7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1):
     dependencies:
       esbuild: 0.25.10
       fdir: 6.5.0(picomatch@4.0.3)
@@ -6823,13 +6870,14 @@ snapshots:
       fsevents: 2.3.3
       jiti: 1.21.7
       lightningcss: 1.30.1
+      tsx: 4.20.6
       yaml: 2.8.1
 
-  vitest@3.2.4(@types/node@22.18.8)(@vitest/ui@3.2.4)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1):
+  vitest@3.2.4(@types/node@22.18.8)(@vitest/ui@3.2.4)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1):
     dependencies:
       '@types/chai': 5.2.2
       '@vitest/expect': 3.2.4
-      '@vitest/mocker': 3.2.4(vite@7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1))
+      '@vitest/mocker': 3.2.4(vite@7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1))
       '@vitest/pretty-format': 3.2.4
       '@vitest/runner': 3.2.4
       '@vitest/snapshot': 3.2.4
@@ -6847,8 +6895,8 @@ snapshots:
       tinyglobby: 0.2.15
       tinypool: 1.1.1
       tinyrainbow: 2.0.0
-      vite: 7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1)
-      vite-node: 3.2.4(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(yaml@2.8.1)
+      vite: 7.1.9(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1)
+      vite-node: 3.2.4(@types/node@22.18.8)(jiti@1.21.7)(lightningcss@1.30.1)(tsx@4.20.6)(yaml@2.8.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.18.8

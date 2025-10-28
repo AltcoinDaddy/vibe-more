@@ -1,22 +1,25 @@
 {
-  "totalFilesScanned": 114,
-  "filesWithLegacyPatterns": 1,
-  "totalPatternsFound": 3,
+  "totalFilesScanned": 217,
+  "filesWithLegacyPatterns": 8,
+  "totalPatternsFound": 35,
   "patternsByType": {
-    "pub-keyword": 3
+    "pub-keyword": 32,
+    "interface-conformance": 1,
+    "storage-api": 2
   },
   "patternsBySeverity": {
-    "critical": 3
+    "critical": 34,
+    "warning": 1
   },
   "patterns": [
     {
       "type": "pub-keyword",
       "pattern": "pub ",
       "location": {
-        "file": "components/code-modernizer.tsx",
-        "line": 190,
+        "file": "components/file-browser.tsx",
+        "line": 386,
         "column": 1,
-        "context": "            placeholder=\"// Paste your legacy Cadence code here...\npub contract MyContract {\n    pub var value: String"
+        "context": "  return `// ${path}\npub contract ${contractName} {\n    "
       },
       "severity": "critical",
       "description": "Legacy pub keyword found in production code",
@@ -27,10 +30,10 @@
       "type": "pub-keyword",
       "pattern": "pub ",
       "location": {
-        "file": "components/code-modernizer.tsx",
-        "line": 191,
+        "file": "components/file-browser.tsx",
+        "line": 389,
         "column": 5,
-        "context": "pub contract MyContract {\n    pub var value: String\n    "
+        "context": "    // Contract state\n    pub var totalSupply: UInt64\n    "
       },
       "severity": "critical",
       "description": "Legacy pub keyword found in production code",
@@ -41,18 +44,466 @@
       "type": "pub-keyword",
       "pattern": "pub ",
       "location": {
-        "file": "components/code-modernizer.tsx",
-        "line": 193,
+        "file": "components/file-browser.tsx",
+        "line": 392,
         "column": 5,
-        "context": "    \n    pub fun getValue(): String {\n        return self.value"
+        "context": "    // Events\n    pub event ContractInitialized()\n    "
       },
       "severity": "critical",
       "description": "Legacy pub keyword found in production code",
       "suggestedFix": "Replace with access(all) or appropriate access modifier",
       "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "components/file-browser.tsx",
+        "line": 401,
+        "column": 5,
+        "context": "    // Public functions\n    pub fun getTotalSupply(): UInt64 {\n        return self.totalSupply"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "components/file-browser.tsx",
+        "line": 509,
+        "column": 42,
+        "context": "  // Extract functions (simple regex-based extraction)\n  const functionRegex = /(?:function|fun|pub fun)\\s+(\\w+)/g\n  const functions: string[] = []"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub      ",
+      "location": {
+        "file": "lib/deployment-script-generator.ts",
+        "line": 1116,
+        "column": 96,
+        "context": "    elsedsseges compreecho \"✅ Ima  \n      -dir=publicoutmagemin --| xargs i*.jpeg\"  -name \".jpg\" -ome \"*\" -o -nae \"*.pnglic -namnd pub      fihen\n  &1; tll 2>ev/nun >/d imagemicommand -v   if lable)"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 771,
+        "column": 5,
+        "context": "    // Mock Cadence contract for ExampleNFT\n    pub contract ExampleNFT {\n      pub var totalSupply: UInt64"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 772,
+        "column": 7,
+        "context": "    pub contract ExampleNFT {\n      pub var totalSupply: UInt64\n      "
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 774,
+        "column": 7,
+        "context": "      \n      pub event Minted(id: UInt64, to: Address)\n      pub event Transfer(id: UInt64, from: Address?, to: Address?)"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 775,
+        "column": 7,
+        "context": "      pub event Minted(id: UInt64, to: Address)\n      pub event Transfer(id: UInt64, from: Address?, to: Address?)\n      "
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 777,
+        "column": 7,
+        "context": "      \n      pub resource NFT {\n        pub let id: UInt64"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 778,
+        "column": 9,
+        "context": "      pub resource NFT {\n        pub let id: UInt64\n        pub let metadata: {String: String}"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 779,
+        "column": 9,
+        "context": "        pub let id: UInt64\n        pub let metadata: {String: String}\n        "
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 787,
+        "column": 7,
+        "context": "      \n      pub fun mint(recipient: Address, metadata: {String: String}): @NFT {\n        let nft <- create NFT(id: self.totalSupply, metadata: metadata)"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 802,
+        "column": 5,
+        "context": "    // Mock Cadence contract for ExampleToken\n    pub contract ExampleToken {\n      pub var totalSupply: UFix64"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 803,
+        "column": 7,
+        "context": "    pub contract ExampleToken {\n      pub var totalSupply: UFix64\n      "
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 805,
+        "column": 7,
+        "context": "      \n      pub event TokensInitialized(initialSupply: UFix64)\n      pub event TokensWithdrawn(amount: UFix64, from: Address?)"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 806,
+        "column": 7,
+        "context": "      pub event TokensInitialized(initialSupply: UFix64)\n      pub event TokensWithdrawn(amount: UFix64, from: Address?)\n      pub event TokensDeposited(amount: UFix64, to: Address?)"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 807,
+        "column": 7,
+        "context": "      pub event TokensWithdrawn(amount: UFix64, from: Address?)\n      pub event TokensDeposited(amount: UFix64, to: Address?)\n      "
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 809,
+        "column": 7,
+        "context": "      \n      pub resource Vault {\n        pub var balance: UFix64"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 810,
+        "column": 9,
+        "context": "      pub resource Vault {\n        pub var balance: UFix64\n        "
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 816,
+        "column": 9,
+        "context": "        \n        pub fun withdraw(amount: UFix64): @Vault {\n          self.balance = self.balance - amount"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 822,
+        "column": 9,
+        "context": "        \n        pub fun deposit(from: @Vault) {\n          let amount = from.balance"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/local-development-generator.ts",
+        "line": 830,
+        "column": 7,
+        "context": "      \n      pub fun createEmptyVault(): @Vault {\n        return <- create Vault(balance: 0.0)"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/migration/comprehensive-system-validator.ts",
+        "line": 180,
+        "column": 7,
+        "context": "    const legacyTestCode = `\n      pub contract TestContract {\n        pub resource Vault: Provider, Receiver {"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/migration/comprehensive-system-validator.ts",
+        "line": 181,
+        "column": 9,
+        "context": "      pub contract TestContract {\n        pub resource Vault: Provider, Receiver {\n          pub var balance: UFix64"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/migration/comprehensive-system-validator.ts",
+        "line": 182,
+        "column": 11,
+        "context": "        pub resource Vault: Provider, Receiver {\n          pub var balance: UFix64\n          "
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "lib/migration/comprehensive-system-validator.ts",
+        "line": 184,
+        "column": 11,
+        "context": "          \n          pub fun deposit(from: @FungibleToken.Vault) {\n            self.balance = self.balance + from.balance"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub\n",
+      "location": {
+        "file": "lib/quality-assurance/prompt-enhancer.ts",
+        "line": 461,
+        "column": 26,
+        "context": "REQUIRED CADENCE 1.0 PATTERNS:\n- access(all) instead of pub\n- access(self) for private access"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub\n",
+      "location": {
+        "file": "lib/vibesdk.ts",
+        "line": 1355,
+        "column": 107,
+        "context": "• **Resources**: Special objects that can only exist in one place at a time, ensuring digital asset security\n• **Access Control**: Uses modern access(all), access(self), access(contract) modifiers instead of legacy pub\n• **Functions**: Methods that can be called to interact with the contract, with proper pre/post conditions"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "test-legacy-prevention.js",
+        "line": 15,
+        "column": 5,
+        "context": "    \n    pub fun deposit() {\n      account.save(<-resource, to: /storage/path)"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "storage-api",
+      "pattern": "account.save(",
+      "location": {
+        "file": "test-legacy-prevention.js",
+        "line": 16,
+        "column": 7,
+        "context": "    pub fun deposit() {\n      account.save(<-resource, to: /storage/path)\n    }"
+      },
+      "severity": "critical",
+      "description": "Legacy account.save() found in production code",
+      "suggestedFix": "Replace with account.storage.save()",
+      "impact": "high"
+    },
+    {
+      "type": "pub-keyword",
+      "pattern": "pub ",
+      "location": {
+        "file": "test-legacy-prevention.ts",
+        "line": 15,
+        "column": 5,
+        "context": "    \n    pub fun deposit() {\n      account.save(<-resource, to: /storage/path)"
+      },
+      "severity": "critical",
+      "description": "Legacy pub keyword found in production code",
+      "suggestedFix": "Replace with access(all) or appropriate access modifier",
+      "impact": "high"
+    },
+    {
+      "type": "storage-api",
+      "pattern": "account.save(",
+      "location": {
+        "file": "test-legacy-prevention.ts",
+        "line": 16,
+        "column": 7,
+        "context": "    pub fun deposit() {\n      account.save(<-resource, to: /storage/path)\n    }"
+      },
+      "severity": "critical",
+      "description": "Legacy account.save() found in production code",
+      "suggestedFix": "Replace with account.storage.save()",
+      "impact": "high"
+    },
+    {
+      "type": "interface-conformance",
+      "pattern": ": Provider, Receiver {",
+      "location": {
+        "file": "lib/migration/comprehensive-system-validator.ts",
+        "line": 181,
+        "column": 27,
+        "context": "      pub contract TestContract {\n        pub resource Vault: Provider, Receiver {\n          pub var balance: UFix64"
+      },
+      "severity": "warning",
+      "description": "Legacy Cadence interface conformance syntax found in production code",
+      "suggestedFix": "Replace comma-separated interfaces with ampersand (&) syntax",
+      "impact": "medium"
     }
   ],
-  "summary": "Scanned 114 production code files and found 3 legacy patterns in 1 files.\n\n🚨 CRITICAL: 3 patterns in production code that must be fixed immediately\n\nPriority: Fix critical patterns in production code first, then warnings, then suggestions.",
-  "generatedAt": "2025-10-07T20:56:54.131Z",
+  "summary": "Scanned 217 production code files and found 35 legacy patterns in 8 files.\n\n🚨 CRITICAL: 34 patterns in production code that must be fixed immediately\n⚠️  WARNING: 1 patterns in production code that should be addressed\n\nPriority: Fix critical patterns in production code first, then warnings, then suggestions.",
+  "generatedAt": "2025-10-28T19:28:02.430Z",
   "version": "1.0.0"
 }
