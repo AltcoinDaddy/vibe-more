@@ -383,13 +383,13 @@ function generateSampleContent(file: GeneratedFile): string {
 function generateSampleContract(path: string): string {
   const contractName = path.split('/').pop()?.replace('.cdc', '') || 'Contract'
   return `// ${path}
-pub contract ${contractName} {
+access(all) contract ${contractName} {
     
     // Contract state
-    pub var totalSupply: UInt64
+    access(all) var totalSupply: UInt64
     
     // Events
-    pub event ContractInitialized()
+    access(all) event ContractInitialized()
     
     // Initialize the contract
     init() {
@@ -398,7 +398,7 @@ pub contract ${contractName} {
     }
     
     // Public functions
-    pub fun getTotalSupply(): UInt64 {
+    access(all) fun getTotalSupply(): UInt64 {
         return self.totalSupply
     }
     
@@ -506,7 +506,7 @@ function analyzeFileContent(content: string, language: string) {
   const characters = content.length
 
   // Extract functions (simple regex-based extraction)
-  const functionRegex = /(?:function|fun|pub fun)\s+(\w+)/g
+  const functionRegex = /(?:function|fun|access\(all\) fun)\s+(\w+)/g
   const functions: string[] = []
   let match
   while ((match = functionRegex.exec(content)) !== null) {

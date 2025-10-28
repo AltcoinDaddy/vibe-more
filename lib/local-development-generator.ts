@@ -768,15 +768,15 @@ export const devUtils = {
 export const mockContracts = {
   ExampleNFT: \`
     // Mock Cadence contract for ExampleNFT
-    pub contract ExampleNFT {
-      pub var totalSupply: UInt64
+    access(all) contract ExampleNFT {
+      access(all) var totalSupply: UInt64
       
-      pub event Minted(id: UInt64, to: Address)
-      pub event Transfer(id: UInt64, from: Address?, to: Address?)
+      access(all) event Minted(id: UInt64, to: Address)
+      access(all) event Transfer(id: UInt64, from: Address?, to: Address?)
       
-      pub resource NFT {
-        pub let id: UInt64
-        pub let metadata: {String: String}
+      access(all) resource NFT {
+        access(all) let id: UInt64
+        access(all) let metadata: {String: String}
         
         init(id: UInt64, metadata: {String: String}) {
           self.id = id
@@ -784,7 +784,7 @@ export const mockContracts = {
         }
       }
       
-      pub fun mint(recipient: Address, metadata: {String: String}): @NFT {
+      access(all) fun mint(recipient: Address, metadata: {String: String}): @NFT {
         let nft <- create NFT(id: self.totalSupply, metadata: metadata)
         self.totalSupply = self.totalSupply + 1
         emit Minted(id: nft.id, to: recipient)
@@ -799,27 +799,27 @@ export const mockContracts = {
   
   ExampleToken: \`
     // Mock Cadence contract for ExampleToken
-    pub contract ExampleToken {
-      pub var totalSupply: UFix64
+    access(all) contract ExampleToken {
+      access(all) var totalSupply: UFix64
       
-      pub event TokensInitialized(initialSupply: UFix64)
-      pub event TokensWithdrawn(amount: UFix64, from: Address?)
-      pub event TokensDeposited(amount: UFix64, to: Address?)
+      access(all) event TokensInitialized(initialSupply: UFix64)
+      access(all) event TokensWithdrawn(amount: UFix64, from: Address?)
+      access(all) event TokensDeposited(amount: UFix64, to: Address?)
       
-      pub resource Vault {
-        pub var balance: UFix64
+      access(all) resource Vault {
+        access(all) var balance: UFix64
         
         init(balance: UFix64) {
           self.balance = balance
         }
         
-        pub fun withdraw(amount: UFix64): @Vault {
+        access(all) fun withdraw(amount: UFix64): @Vault {
           self.balance = self.balance - amount
           emit TokensWithdrawn(amount: amount, from: self.owner?.address)
           return <- create Vault(balance: amount)
         }
         
-        pub fun deposit(from: @Vault) {
+        access(all) fun deposit(from: @Vault) {
           let amount = from.balance
           self.balance = self.balance + amount
           emit TokensDeposited(amount: amount, to: self.owner?.address)
@@ -827,7 +827,7 @@ export const mockContracts = {
         }
       }
       
-      pub fun createEmptyVault(): @Vault {
+      access(all) fun createEmptyVault(): @Vault {
         return <- create Vault(balance: 0.0)
       }
       

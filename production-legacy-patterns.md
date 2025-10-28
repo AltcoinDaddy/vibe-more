@@ -1,12 +1,12 @@
 # Legacy Cadence Patterns Scan Report
 
-Generated: 2025-10-28T19:28:02.426Z
+Generated: 2025-10-28T19:49:37.263Z
 
 ## Executive Summary
 
-Scanned 217 production code files and found 35 legacy patterns in 8 files.
+Scanned 217 production code files and found 12 legacy patterns in 6 files.
 
-🚨 CRITICAL: 34 patterns in production code that must be fixed immediately
+🚨 CRITICAL: 11 patterns in production code that must be fixed immediately
 ⚠️  WARNING: 1 patterns in production code that should be addressed
 
 Priority: Fix critical patterns in production code first, then warnings, then suggestions.
@@ -14,14 +14,14 @@ Priority: Fix critical patterns in production code first, then warnings, then su
 ## Scan Statistics
 
 - **Total Files Scanned**: 217
-- **Files with Legacy Patterns**: 8
-- **Total Patterns Found**: 35
+- **Files with Legacy Patterns**: 6
+- **Total Patterns Found**: 12
 
 ### Patterns by Type
 
 | Pattern Type | Count |
 |--------------|-------|
-| pub-keyword | 32 |
+| pub-keyword | 9 |
 | interface-conformance | 1 |
 | storage-api | 2 |
 
@@ -29,89 +29,10 @@ Priority: Fix critical patterns in production code first, then warnings, then su
 
 | Severity | Count | Priority |
 |----------|-------|----------|
-| critical | 34 | 🚨 HIGH |
+| critical | 11 | 🚨 HIGH |
 | warning | 1 | ⚠️ MEDIUM |
 
 ## Detailed Findings (Grouped by File)
-
-### components/file-browser.tsx
-
-Found 5 pattern(s) in this file:
-
-#### 1. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 386, Column 1
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-  return `// ${path}
-pub contract ${contractName} {
-    
-```
-
-#### 2. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 389, Column 5
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-    // Contract state
-    pub var totalSupply: UInt64
-    
-```
-
-#### 3. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 392, Column 5
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-    // Events
-    pub event ContractInitialized()
-    
-```
-
-#### 4. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 401, Column 5
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-    // Public functions
-    pub fun getTotalSupply(): UInt64 {
-        return self.totalSupply
-```
-
-#### 5. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 509, Column 42
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-  // Extract functions (simple regex-based extraction)
-  const functionRegex = /(?:function|fun|pub fun)\s+(\w+)/g
-  const functions: string[] = []
-```
 
 ### lib/deployment-script-generator.ts
 
@@ -130,280 +51,6 @@ Found 1 pattern(s) in this file:
     elsedsseges compreecho "✅ Ima  
       -dir=publicoutmagemin --| xargs i*.jpeg"  -name ".jpg" -ome "*" -o -nae "*.pnglic -namnd pub      fihen
   &1; tll 2>ev/nun >/d imagemicommand -v   if lable)
-```
-
-### lib/local-development-generator.ts
-
-Found 18 pattern(s) in this file:
-
-#### 1. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 771, Column 5
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-    // Mock Cadence contract for ExampleNFT
-    pub contract ExampleNFT {
-      pub var totalSupply: UInt64
-```
-
-#### 2. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 772, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-    pub contract ExampleNFT {
-      pub var totalSupply: UInt64
-      
-```
-
-#### 3. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 774, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      
-      pub event Minted(id: UInt64, to: Address)
-      pub event Transfer(id: UInt64, from: Address?, to: Address?)
-```
-
-#### 4. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 775, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      pub event Minted(id: UInt64, to: Address)
-      pub event Transfer(id: UInt64, from: Address?, to: Address?)
-      
-```
-
-#### 5. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 777, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      
-      pub resource NFT {
-        pub let id: UInt64
-```
-
-#### 6. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 778, Column 9
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      pub resource NFT {
-        pub let id: UInt64
-        pub let metadata: {String: String}
-```
-
-#### 7. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 779, Column 9
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-        pub let id: UInt64
-        pub let metadata: {String: String}
-        
-```
-
-#### 8. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 787, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      
-      pub fun mint(recipient: Address, metadata: {String: String}): @NFT {
-        let nft <- create NFT(id: self.totalSupply, metadata: metadata)
-```
-
-#### 9. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 802, Column 5
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-    // Mock Cadence contract for ExampleToken
-    pub contract ExampleToken {
-      pub var totalSupply: UFix64
-```
-
-#### 10. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 803, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-    pub contract ExampleToken {
-      pub var totalSupply: UFix64
-      
-```
-
-#### 11. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 805, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      
-      pub event TokensInitialized(initialSupply: UFix64)
-      pub event TokensWithdrawn(amount: UFix64, from: Address?)
-```
-
-#### 12. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 806, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      pub event TokensInitialized(initialSupply: UFix64)
-      pub event TokensWithdrawn(amount: UFix64, from: Address?)
-      pub event TokensDeposited(amount: UFix64, to: Address?)
-```
-
-#### 13. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 807, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      pub event TokensWithdrawn(amount: UFix64, from: Address?)
-      pub event TokensDeposited(amount: UFix64, to: Address?)
-      
-```
-
-#### 14. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 809, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      
-      pub resource Vault {
-        pub var balance: UFix64
-```
-
-#### 15. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 810, Column 9
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      pub resource Vault {
-        pub var balance: UFix64
-        
-```
-
-#### 16. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 816, Column 9
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-        
-        pub fun withdraw(amount: UFix64): @Vault {
-          self.balance = self.balance - amount
-```
-
-#### 17. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 822, Column 9
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-        
-        pub fun deposit(from: @Vault) {
-          let amount = from.balance
-```
-
-#### 18. 🚨 Legacy pub keyword found in production code
-
-- **Pattern**: `pub `
-- **Location**: Line 830, Column 7
-- **Severity**: critical
-- **Impact**: high
-- **Suggested Fix**: Replace with access(all) or appropriate access modifier
-
-**Context:**
-```cadence
-      
-      pub fun createEmptyVault(): @Vault {
-        return <- create Vault(balance: 0.0)
 ```
 
 ### lib/migration/comprehensive-system-validator.ts
@@ -598,9 +245,9 @@ Found 2 pattern(s) in this file:
 
 ### 🚨 Immediate Action Required
 
-34 critical patterns must be fixed before deployment:
+11 critical patterns must be fixed before deployment:
 
-- **pub-keyword**: 32 instances
+- **pub-keyword**: 9 instances
 - **storage-api**: 2 instances
 
 ### ⚠️ High Priority
